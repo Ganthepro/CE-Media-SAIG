@@ -8,6 +8,7 @@ export function Home() {
       <Header />
       
       <Footer />
+      {/* <Navbar /> */}
     </div>
   )
 }
