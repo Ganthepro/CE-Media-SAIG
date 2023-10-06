@@ -5,7 +5,7 @@ import CE_logoPic from './assets/ce_logo.png';
 import Navbar from "./navbar_mobile";
 
 function Header() {
-    const [isLogin, setIsLogin] = useState(tr);
+    const [isLogin, setIsLogin] = useState(true);
     const [isNav, setIsNav] = useState(false);
     
     function click() {

@@ -6,9 +6,9 @@ import Card from './card'
 export function Home() {
   return (
     <>
-      {/* <Header />
-      <Footer /> */}
-      <Card />
+      <Header />
+      <Footer />
+      {/* <Card /> */}
     </>
   )
 }
