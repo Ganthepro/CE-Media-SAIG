@@ -1,0 +1,56 @@
+.main-card {
+    /* border: 3px solid orange; */
+    border-radius: 20px;
+    width: 100%;height: 480px;
+    position: absolute;
+}
+
+.main-card * {
+    left: 10px;
+}
+
+.title-card {
+    color:black;
+    position: absolute;
+    top: 3.5px; 
+    font-size: xx-large;
+}
+
+.userName {
+    top: 45px;
+    position: absolute; 
+}
+
+.description {
+    top: 70px;width: calc(100% - 10px);
+    position: absolute;
+    word-wrap: break-word;  
+}
+
+.pic-card {
+    position: absolute;
+    height: 295px;
+    width: calc(100% - 20px);
+    background-color: black;
+    top: 125px;left: 50%;transform: translate(-50%,0);
+}
+
+.pic-card img {
+    position: absolute;
+    height: 100%;
+    left: 50%;transform: translate(-50%);
+}
+
+.expression {
+    position: absolute;
+    width: 60%;height: 35px;
+    /* border: 2px solid red; */
+    bottom: 10px;left: 50%;transform: translate(-50%,0);
+    display: flex;
+    justify-content: space-around;
+}
+
+hr {
+    position: relative;
+    top: 20px;
+}

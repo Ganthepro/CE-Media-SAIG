@@ -5,10 +5,10 @@ import CE_logoPic from './assets/ce_logo.png';
 import Navbar from "./navbar_mobile";
 
 function Header() {
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(tr);
     const [isNav, setIsNav] = useState(false);
     
-    function openNav() {
+    function click() {
         if (isLogin) {
             setIsNav(!isNav);
             console.log(isNav)
@@ -23,9 +23,9 @@ function Header() {
                 <a href="https://www.google.com" className="type-post">โพสต์</a>
                 <a href="https://www.google.com" className="type-video">วิดีโอ</a>
             </div>
-            <button className="user" onClick={openNav}>
+            <button className="user" onClick={click}>
                 <img src={userPic} alt="User Icon" />
-                <p>{isLogin ? "Signed In" : "Sign Up"}</p>
+                <p>{isLogin ? "Signed In" : "Sign In/Up"}</p>
                 {isNav && <Navbar />}
             </button>
         </div>
