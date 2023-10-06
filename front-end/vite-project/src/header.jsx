@@ -20,13 +20,13 @@ function Header() {
             <h1>CE Media</h1>
             <img className="ce-logo" src={CE_logoPic} alt="CE Logo" />
             <div className="type">
-                <a href="www.google.com" className="type-post">โพสต์</a>
-                <a href="www.google.com" className="type-video">วิดีโอ</a>
+                <a href="https://www.google.com" className="type-post">โพสต์</a>
+                <a href="https://www.google.com" className="type-video">วิดีโอ</a>
             </div>
             <button className="user" onClick={openNav}>
                 <img src={userPic} alt="User Icon" />
                 <p>{isLogin ? "Signed In" : "Sign Up"}</p>
-                {isNav && <Navbar />} {/* Conditionally render Navbar */}
+                {isNav && <Navbar />}
             </button>
         </div>
     );
