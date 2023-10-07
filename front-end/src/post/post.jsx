@@ -1,6 +1,6 @@
 import './post.css'
-import Header from './header'
-import Footer from './footer'
+import Header from '../templent/header'
+import Footer from '../templent/footer'
 import Card from './card'
 
 export function Post() {
@@ -19,5 +19,3 @@ export function Post() {
     </>
   )
 }
-
-export default Post
