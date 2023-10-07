@@ -36,8 +36,6 @@ function Header() {
 
   function click() {
     if (isLogin && isNav) {
-        setIsNav(false);
-        setIsLogin(false);
     } else if (isLogin) {
       setIsNav(!isNav);
     } else if (!isNav) {
@@ -68,7 +66,8 @@ function Header() {
   function handleSignOut() {
     signOut(auth)
       .then(() => {
-        console.log("sign out")
+        setIsNav(false);
+        setIsLogin(false);
       })
       .catch((error) => {
         // An error happened.
