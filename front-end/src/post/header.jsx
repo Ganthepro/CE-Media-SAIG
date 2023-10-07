@@ -1,7 +1,7 @@
 import "./header.css";
 import { useState } from "preact/hooks";
-import userPic from './assets/user.png';
-import CE_logoPic from './assets/ce_logo.png';
+import userPic from '../assets/user.png';
+import CE_logoPic from '../assets/ce_logo.png';
 import Navbar from "./navbar_mobile";
 
 function Header() {

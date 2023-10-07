@@ -1,7 +1,7 @@
 import './card.css'
-import testPic from './assets/IMG_20231006_191213.jpg'
-import likePic from './assets/like.png'
-import commentPic from './assets/chat.png'
+import testPic from '../assets/IMG_20231006_191213.jpg'
+import likePic from '../assets/like.png'
+import commentPic from '../assets/chat.png'
 
 function Card() {
     return(

@@ -28,6 +28,7 @@
     top: 70px;width: calc(100% - 10px);
     position: absolute;
     word-wrap: break-word;  
+    padding-right: 5px;
 }
 
 .pic-card {
