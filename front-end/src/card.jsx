@@ -8,11 +8,17 @@ function Card() {
         <div className='main-card'>
            <h2 className='title-card'>Test Title</h2>
            <b className='userName'>GanThepro</b>
-           <p className='description'>asdadddddddddddddddddddddddddddddddddddddalw,a;wlalwdad,ad,lwlad,;a,lw,a,;ddwa</p>
+           <p className='description'>asdadddddddddddddddddddddddddddddddddddddalw,a;wlalwdad,ad,lwlad,;dssdfsd</p>
            <div className='pic-card'><img src={testPic} /></div>
            <div className='expression'>
-                <img src={likePic} />
-                <img src={commentPic} />
+                <div>
+                    <img src={likePic} />
+                    <p>166</p>
+                </div>
+                <div>
+                    <img src={commentPic} />
+                    <p>166</p>
+                </div>
            </div>
         </div>   
     )
