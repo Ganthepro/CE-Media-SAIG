@@ -14,12 +14,19 @@
     border-radius: 5px;
 }
 
-.main-navbar a {
+.main-navbar * {
     transition: color 0.3s;
     color: black;
     text-decoration: none;
+    background-color: white;
+    border: none;
 }
 
-.main-navbar a:hover {
+.main-navbar *:hover {
+    cursor: pointer;
     color: orange;
+}
+
+* {
+    z-index: 4;
 }
