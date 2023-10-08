@@ -1,13 +1,16 @@
 import { render } from 'preact'
 import { Post } from './post/post.jsx'
-import { SignIn } from './sign_in/sign_in.jsx'
+import { Video } from './video/video.jsx'
+import BigCard from './big_card.jsx'
+import Comment from './comment.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-dom"
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Post />
+        element: <BigCard mode="pic"/>
+        // element: <Comment/>
     }
 ])
 

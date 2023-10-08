@@ -22,7 +22,11 @@
     border: none;
 }
 
-.main-navbar *:hover {
+.main-navbar a:hover {
+    cursor: pointer;
+    color: orange;
+}
+.main-navbar button:hover {
     cursor: pointer;
     color: orange;
 }

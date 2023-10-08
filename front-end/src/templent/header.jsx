@@ -33,6 +33,7 @@ const auth = getAuth();
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [profilePicURL, setprofilePicURL] = useState("")
+  const [Username, setUsername] = useState("")
   const [isNav, setIsNav] = useState(false);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -40,6 +41,7 @@ function Header() {
         setIsLogin(true);
         try {
           setprofilePicURL(localStorage.getItem('photoURL'))
+          setUsername(localStorage.getItem('username'))
         } catch(err) {
           console.error(err)
         }
@@ -51,9 +53,9 @@ function Header() {
             // The signed-in user info.
             const user = result.user;
             localStorage.setItem('photoURL', user.photoURL);
+            localStorage.setItem('username', user.displayName);
             setprofilePicURL(localStorage.getItem('photoURL'))
-            console.log(user.email);
-            // IdP data available using getAdditionalUserInfo(result)
+            setUsername(localStorage.getItem('username'))
             // ...
           })
           .catch((error) => {
@@ -107,9 +109,10 @@ function Header() {
         </a>
       </div>
       <button className="user" onClick={click}>
+        {console.log(Username)}
         <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
         <p>{isLogin ? "Signed In" : "Sign In/Up"}</p>
-        {isNav && <Navbar signOutFunc={handleSignOut} />}
+        {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} />}
       </button>
     </div>
   );
