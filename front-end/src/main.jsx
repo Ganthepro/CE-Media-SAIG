@@ -9,8 +9,8 @@ import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-d
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <BigCard mode="pic"/>
-        // element: <Comment/>
+        // element: <BigCard mode="pic"/>
+        element: <Post/>
     }
 ])
 

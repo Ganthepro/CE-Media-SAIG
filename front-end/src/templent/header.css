@@ -46,7 +46,6 @@
     transform: translate(0,-50%);
     border: 3px solid orange;
     border-radius: 20px;
-    width: 40px;height: 40px;
     background-color: white;
 }
 
@@ -61,9 +60,9 @@
 
 .ce-logo {
     position: absolute;
-    top: 50%;left: 25px;
+    top: 50%;left: 15px;
     transform: translate(0,-50%);
-    width: 45px;
+    height: 45px;
 }
 
 @media (max-width: 570px) {
@@ -94,14 +93,15 @@
 
     .user img {
         position: absolute;
-        left: 10px;
+        left: 0px;
         transform: translate(0,-50%);
         height: 80%;
     }
 
     .user p {
         position: absolute;
-        top: 50%;right: 10px;
-        transform: translate(0,-50%);
+        width: 80%;
+        top: 50%;left: 57%;
+        transform: translate(-50%,-50%);
     }
 }

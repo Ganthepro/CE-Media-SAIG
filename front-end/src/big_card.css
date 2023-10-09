@@ -1,7 +1,7 @@
-.main-card {
-    /* border: 3px solid orange; */
+.card {
+    border: 3px solid orange;
     border-radius: 20px;
-    height: calc(100 * 6px); /* Fix the multiplication here */
+    height: calc(100 * 6px);
     position: relative;
     /* margin-bottom: 20px; */
     /* margin-right: 10px; */
@@ -9,11 +9,16 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
-.main-card * {
+.main-big-card {
+    border: 2px solid red;
+    position: relative;   
+}
+
+.card * {
     left: 10px;
 }
 
-.title-card {
+.title-big-card {
     color: black;
     position: absolute;
     top: 3.5px;
@@ -34,7 +39,7 @@
     padding-right: 5px;
 }
 
-.pic-card {
+.pic-big-card {
     position: absolute;
     height: calc(100 * 6px - 185px);
     width: calc(100% - 20px);
@@ -44,8 +49,8 @@
     transform: translate(-50%, 0);
 }
 
-.pic-card img,
-.pic-card video {
+.pic-big-card img,
+.pic-big-card video {
     position: absolute;
     height: 100%;
     left: 50%;
@@ -54,8 +59,8 @@
 
 .comment {
     position: relative;
-    left: 10px;
-    top: -10px;
+    /* left: 10px; */
+    margin-top: 10px;
     border-radius: 10px;
     background-color:whitesmoke;
     border: 3px solid black;
@@ -105,19 +110,19 @@ hr {
 }
 
 @media (max-width: 570px) {
-    .main-card,.comment {
-        width: 100%;
+    .card,.comment {
+        width: 90%;
     }
-    .main-card {
+    /* .card {
         padding-top: 120%;
-    }
-    .pic-card img,.pic-card video  {
+    } */
+    .pic-big-card img,.pic-big-card video  {
         margin-left: 0;
     }
 }
 
 @media (min-width: 570px) {
-    .main-card,.comment {
+    .card,.comment {
         width: calc(100 * 5px); /* Fix the multiplication here */
     }
 }

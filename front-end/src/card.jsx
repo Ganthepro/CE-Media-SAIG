@@ -5,8 +5,12 @@ import likePic from './assets/like.png'
 import commentPic from './assets/chat.png'
 
 function Card(props) {
+    function openCard() {
+        props.open()
+    }
+    
     return(
-        <div className='main-card'>
+        <div className='main-card' onClick={openCard}>
            <h2 className='title-card'>Title</h2>
            <b className='userName'>Username</b>
            <p className='description'>ตัวพี่ชอบกินตับหวาน ส่วนตัวน้องนั้นชอบทานตำไทย ตำมั่ว ตำซั่ว ตำแตง จะมัวออกแรง นั่งตำทำไม</p>

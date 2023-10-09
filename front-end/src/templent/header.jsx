@@ -109,7 +109,7 @@ function Header() {
         </a>
       </div>
       <button className="user" onClick={click}>
-        {console.log(Username)}
+        {console.log(profilePicURL)}
         <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
         <p>{isLogin ? "Signed In" : "Sign In/Up"}</p>
         {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} />}

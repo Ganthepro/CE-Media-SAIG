@@ -8,16 +8,16 @@ import Comment from "./comment";
 
 function BigCard(props) {
   return (
-    <>
-      <div className="main-card">
+    <div className="main-big-card">
+      <div className="card">
         <button style={{background : "white",border : "none",position : "absolute",top : "15px",left : "90%"}}><img src={closePic} style={{width : "30px",padding : "0",margin : "0"}}/></button>
-        <h2 className="title-card">Title</h2>
+        <h2 className="title-big-card">Title</h2>
         <b className="userName">Username</b>
         <p className="description">
           ตัวพี่ชอบกินตับหวาน ส่วนตัวน้องนั้นชอบทานตำไทย ตำมั่ว ตำซั่ว ตำแตง
           จะมัวออกแรง นั่งตำทำไม
         </p>
-        <div className="pic-card">
+        <div className="pic-big-card">
           {props.mode == "pic" && <img src={testPic} />}
           {props.mode == "video" && (
             <video autoplay muted loop controls id="background-video">
@@ -44,7 +44,7 @@ function BigCard(props) {
         <Comment />
         <Comment />
       </div>
-    </>
+    </div>
   );
 }
 
