@@ -7,10 +7,14 @@ import closePic from "./assets/close.png"
 import Comment from "./comment";
 
 function BigCard(props) {
+  function openCard() {
+      props.open()
+  }
+  
   return (
     <div className="main-big-card">
       <div className="card">
-        <button style={{background : "white",border : "none",position : "absolute",top : "15px",left : "90%"}}><img src={closePic} style={{width : "30px",padding : "0",margin : "0"}}/></button>
+        <button onClick={openCard} style={{background : "white",border : "none",position : "absolute",top : "15px",left : "90%"}}><img src={closePic} style={{width : "30px",padding : "0",margin : "0"}}/></button>
         <h2 className="title-big-card">Title</h2>
         <b className="userName">Username</b>
         <p className="description">

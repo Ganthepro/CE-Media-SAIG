@@ -27,7 +27,7 @@ export function Post() {
       </div>
       {isOpenCard &&
       <div className='big-card'>
-        <BigCard mode="pic"/>
+        <BigCard mode="pic" open={openCard}/>
       </div> 
       }
     </>
