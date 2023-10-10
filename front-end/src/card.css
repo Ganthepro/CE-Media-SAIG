@@ -55,11 +55,14 @@
     align-items: center;
 }
 
-.expression div {
+.expression button {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 90px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .expression img {

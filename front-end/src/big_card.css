@@ -1,3 +1,7 @@
+.main-of-main {
+    overflow: auto;
+}
+
 .card {
     border: 3px solid orange;
     border-radius: 20px;
@@ -10,7 +14,6 @@
 }
 
 .main-big-card {
-    border: 2px solid red;
     position: relative;   
 }
 
@@ -93,11 +96,14 @@ form {
     align-items: center;
 }
 
-.expression div {
+.expression button {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 90px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .expression img {

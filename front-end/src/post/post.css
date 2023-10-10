@@ -12,9 +12,11 @@
 
 .big-card {
   position: fixed;
-  top: 80px;left: 50%;
+  top: 35px;left: 50%;
   transform: translate(-50%,0);
-  border: 2px solid red;
   z-index: 3;
   background-color: white;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 90%;
 }

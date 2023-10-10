@@ -98,18 +98,19 @@ function Header() {
 
   return (
     <div className="main-header">
-      <h1>CE Media</h1>
-      <img className="ce-logo" src={CE_logoPic} alt="CE Logo" />
+      <a href="/" style={{color:"black"}}>
+        <h1>CE Media</h1>
+        <img className="ce-logo" src={CE_logoPic} alt="CE Logo" />
+      </a>
       <div className="type">
-        <a href="#" className="type-post">
-          โพสต์
+        <a href="/" className="type-post">
+          Post
         </a>
-        <a href="https://www.google.com" className="type-video">
-          วิดีโอ
+        <a href="/video" className="type-video">
+          Video
         </a>
       </div>
       <button className="user" onClick={click}>
-        {console.log(profilePicURL)}
         <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
         <p>{isLogin ? "Signed In" : "Sign In/Up"}</p>
         {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} />}

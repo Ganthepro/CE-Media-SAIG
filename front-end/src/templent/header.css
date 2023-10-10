@@ -41,21 +41,18 @@
 }
 
 .user {
+    cursor: pointer;
     position: absolute;
     top: 50%;right: 25px;
     transform: translate(0,-50%);
     border: 3px solid orange;
     border-radius: 20px;
     background-color: white;
+    height: 40px;
 }
 
 .user p {
     font-size:medium;
-}
-
-.user img {
-    top: 50%;left: 50%;
-    transform: translate(-50%,-50%);
 }
 
 .ce-logo {
@@ -74,8 +71,14 @@
         display: none;
     }
     
+    .user {
+        width: 40px;
+    }
+    
     .user img {
         position: absolute;
+        left: 50%;top: 50%;transform: translate(-50%,-50%);
+        margin: 0;
         height: 80%;
     }
 }
@@ -88,7 +91,7 @@
     }
     
     .user {
-        width: 140px;height: 40px;
+        width: 140px;
     }
 
     .user img {
