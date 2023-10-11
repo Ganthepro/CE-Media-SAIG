@@ -1,7 +1,6 @@
 .bar {
     position: relative;
     display: flex;
-    /* border: 2px solid red; */
     margin-bottom: 10px;
 }
 
@@ -10,7 +9,6 @@
     background-color: white;
     border: 3px solid orange;
     height: 30px;
-    /* padding: 5px 5px; */
     padding-right: 5px;
     padding-left: 5px;
     border-radius: 10px;

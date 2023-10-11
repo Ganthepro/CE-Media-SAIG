@@ -14,13 +14,22 @@ export function Profile() {
         setIsPost(false)
     }
     
+    const notIsStyle = {
+        backgroundColor: "white",
+        border: "3px solid orange",
+    }
+    const isStyle = {
+        backgroundColor: "orange",
+        color: "white"
+    }
+    
     return(
         <>
             <Header />
             <div className='bar'>
                 <p className='page-text'>Profile</p>
-                <button onClick={toPost}>My Post</button> 
-                <button onClick={toVideo}>My Video</button> 
+                <button onClick={toPost} style={isPost ? isStyle : notIsStyle}>My Post</button> 
+                <button onClick={toVideo} style={!isPost ? isStyle : notIsStyle}>My Video</button> 
             </div>
             <div className='contents'>
                 {console.log(isPost)}

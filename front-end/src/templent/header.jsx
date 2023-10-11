@@ -122,6 +122,9 @@ function Header() {
           <a href="/video" className="type-video">
             Video
           </a>
+          <a href="/user" className="type-user">
+            User
+          </a>
         </div>
         <button className="user" onClick={click}>
           <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
