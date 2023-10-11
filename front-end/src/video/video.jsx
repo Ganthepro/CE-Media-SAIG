@@ -18,8 +18,8 @@ export function Video() {
         <Header />
         <div className='bar'>
             <p className='page-text'>Video</p>
-            <button>My Post</button> 
-            <button>My Video</button> 
+            <button>recomment 1</button> 
+            <button>recomment 2</button> 
         </div>
         <div className="contents">
           <Card mode="video" open={openCard} />

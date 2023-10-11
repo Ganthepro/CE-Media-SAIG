@@ -18,8 +18,8 @@ export function Post() {
         <Header />
         <div className='bar'>
             <p className='page-text'>Post</p>
-            <button>My Post</button> 
-            <button>My Video</button> 
+            <button>recomment 1</button> 
+            <button>recomment 2</button> 
         </div>
         <div className='contents'>
           <Card mode="pic" open={openCard}/>

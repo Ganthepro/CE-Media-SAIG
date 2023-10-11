@@ -6,8 +6,12 @@ import Card from '../card'
 
 export function Profile() {
     const [isPost,setIsPost] = useState(true)
-    function changeView() {
-        setIsPost(!isPost)
+    function toPost() {
+        setIsPost(true)
+    }
+    
+    function toVideo() {
+        setIsPost(false)
     }
     
     return(
@@ -15,10 +19,11 @@ export function Profile() {
             <Header />
             <div className='bar'>
                 <p className='page-text'>Profile</p>
-                <button>My Post</button> 
-                <button>My Video</button> 
+                <button onClick={toPost}>My Post</button> 
+                <button onClick={toVideo}>My Video</button> 
             </div>
             <div className='contents'>
+                {console.log(isPost)}
                 {isPost &&
                 <>
                     <Card mode="pic" isPro={true}/>

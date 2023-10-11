@@ -1,0 +1,65 @@
+.main-login {
+    position: fixed;
+    border: 3px solid orange;
+    width: 335px;
+    height: 280px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+    display: flex;
+    top: 50%;left: 50%;transform: translate(-50%,-50%);
+    justify-content: space-around;
+    z-index: 3;
+    background-color: white;
+}
+
+.h3-login {
+    position: absolute;
+    margin-top: 5px;
+    left: 50%;transform: translate(-50%,0); 
+}
+
+.sub-login {
+    position: relative;
+    top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-form {
+    width: 300px;
+}
+
+.submit {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 300px;height: 70px;
+}
+
+.google-login,p {
+    margin-top: 2.5px;
+}
+
+.close-but img {
+    height: 15px;
+    cursor: pointer;
+}
+
+.for-blur {
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(5px);
+    position: fixed;
+    z-index: 2;
+}
+
+button {
+    cursor: pointer;
+}

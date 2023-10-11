@@ -2,9 +2,10 @@ import "./header.css";
 import { useState, useEffect } from "preact/hooks";
 import userPic from "../assets/user.png";
 import CE_logoPic from "../assets/ce_logo.png";
-import Navbar from "./navbar_mobile";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import Navbar from "./navbar_mobile";
+import Login from "./login";
 import {
   GoogleAuthProvider,
   getAuth,
@@ -34,7 +35,9 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [profilePicURL, setprofilePicURL] = useState("")
   const [Username, setUsername] = useState("")
-  const [isNav, setIsNav] = useState(false);
+  const [isNav, setIsNav] = useState(false)
+  const [isOpenLog,setIsOpenLog] = useState(false)
+  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -75,13 +78,21 @@ function Header() {
   }, [auth]);
 
   function click() {
-    if (isLogin && isNav) {
-    } 
-    if (isLogin) {
+    if (!isLogin && !isNav)
+      setIsOpenLog(true)
+    if (isLogin) 
       setIsNav(!isNav);
-    } else if (!isNav) {
-      signInWithRedirect(auth, provider);
-    }
+    // else if (!isNav) {
+    //   signInWithRedirect(auth, provider);
+    // }
+  }
+  
+  function googleSingIn() {
+    signInWithRedirect(auth, provider);
+  }
+  
+  function closeLog() {
+    setIsOpenLog(false)
   }
 
   function handleSignOut() {
@@ -97,25 +108,28 @@ function Header() {
   }
 
   return (
-    <div className="main-header">
-      <a href="/" style={{color:"black"}}>
-        <h1>CE Media</h1>
-        <img className="ce-logo" src={CE_logoPic} alt="CE Logo" />
-      </a>
-      <div className="type">
-        <a href="/" className="type-post">
-          Post
+    <>
+      {isOpenLog && <Login closeFunc={closeLog} googleSignIn={googleSingIn} />}
+      <div className="main-header">
+        <a href="/" style={{color:"black"}}>
+          <h1>CE Media</h1>
+          <img className="ce-logo" src={CE_logoPic} alt="CE Logo" />
         </a>
-        <a href="/video" className="type-video">
-          Video
-        </a>
+        <div className="type">
+          <a href="/" className="type-post">
+            Post
+          </a>
+          <a href="/video" className="type-video">
+            Video
+          </a>
+        </div>
+        <button className="user" onClick={click}>
+          <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
+          <p style={{marginTop:"0"}}>{isLogin ? "Signed In" : "Sign In/Up"}</p>
+          {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} />}
+        </button>
       </div>
-      <button className="user" onClick={click}>
-        <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
-        <p>{isLogin ? "Signed In" : "Sign In/Up"}</p>
-        {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} />}
-      </button>
-    </div>
+    </>
   );
 }
 

@@ -12,11 +12,22 @@
 
 .big-card {
   position: fixed;
-  top: 35px;left: 50%;
-  transform: translate(-50%,0);
+  top: 10px;
   z-index: 3;
   background-color: white;
   overflow: hidden;
   overflow-y: scroll;
-  height: 90%;
+  height: 97%;
+}
+
+@media (min-width: 570px) {
+  .big-card {
+    left: 50%;transform: translate(-50%,0);
+  }
+}
+
+@media (max-width: 570px) {
+  .big-card {
+    left: 0;
+  }
 }

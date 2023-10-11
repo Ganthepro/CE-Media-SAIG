@@ -8,7 +8,7 @@ function Navbar(props) {
     return(
         <div className='main-navbar'>
             <h4>{props.userName}</h4>
-            <a href="https://www.google.com">Profile</a>
+            <a href="/profile">Profile</a>
             <a href="https://www.google.com">Post</a>
             <button onClick={handleSignOutClick}>Sign Out</button>
         </div>

@@ -57,10 +57,11 @@ function BigCard(props) {
           </div>
         </div>
         <div className="comment">
-          <form action="submit_action.php" method="POST">
+          <form action="submit_action.php" method="POST" className="comment-form">
             <input type="text" id="name" name="name" placeholder="Comment" />
             <input type="submit" value="Submit" />
           </form>
+          <Comment />
           <Comment />
           <Comment />
         </div>

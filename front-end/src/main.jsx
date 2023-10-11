@@ -5,15 +5,16 @@ import BigCard from './big_card.jsx'
 import Comment from './comment.jsx'
 import { Profile } from './profile/profile.jsx'
 import './index.css'
+import Login from './templent/login.jsx'
 import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-dom"
 
 const router = createBrowserRouter([
-    // {
-    //     path: "/",
-    //     element: <Post/>
-    // },
     {
         path: "/",
+        element: <Post />// <Post/>
+    },
+    {
+        path: "/profile",
         element: <Profile />
     }, 
     {
