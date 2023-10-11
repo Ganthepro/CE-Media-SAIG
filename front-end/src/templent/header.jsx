@@ -82,9 +82,6 @@ function Header() {
       setIsOpenLog(true)
     if (isLogin) 
       setIsNav(!isNav);
-    // else if (!isNav) {
-    //   signInWithRedirect(auth, provider);
-    // }
   }
   
   function googleSingIn() {
@@ -102,9 +99,7 @@ function Header() {
         setIsLogin(false)
         localStorage.clear()
       })
-      .catch((error) => {
-        // An error happened.
-      });
+      .catch((error) => {});
   }
 
   return (
