@@ -6,6 +6,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Navbar from "./navbar_mobile";
 import Login from "./login";
+import ShowProfile from "./show-profile";
 import {
   GoogleAuthProvider,
   getAuth,
@@ -37,6 +38,7 @@ function Header() {
   const [Username, setUsername] = useState("")
   const [isNav, setIsNav] = useState(false)
   const [isOpenLog,setIsOpenLog] = useState(false)
+  const [isOpenPro,setIsOpenPro] = useState(false)
   
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -118,15 +120,16 @@ function Header() {
             Video
           </a>
           <a href="/user" className="type-user">
-            User
+            Users
           </a>
         </div>
         <button className="user" onClick={click}>
           <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
           <p style={{marginTop:"0"}}>{isLogin ? "Signed In" : "Sign In/Up"}</p>
-          {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} />}
+          {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} openPro={setIsOpenPro}/>}
         </button>
       </div>
+      {isOpenPro && <ShowProfile close={() => setIsOpenPro(false)} isEdit={false}/>}
     </>
   );
 }

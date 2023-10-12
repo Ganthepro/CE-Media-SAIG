@@ -25,5 +25,26 @@
 }
 
 .user-edit {
-    width: 100%;height: calc(100vh - 80px - 35px - 45px);
+    width: 95%;height: calc(100vh - 80px - 35px - 55px);
+    max-width: 400px;
+    border-radius: 10px;
+    background-color: blanchedalmond;
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.user-edit img {
+    position: relative;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0;
+}
+
+.user-edit div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }

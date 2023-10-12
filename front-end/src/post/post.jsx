@@ -16,11 +16,6 @@ export function Post() {
     <>
       <div style={isOpenCard && { filter: "blur(5px)" }}>
         <Header />
-        <div className='bar'>
-            <p className='page-text'>Post</p>
-            <button>recomment 1</button> 
-            <button>recomment 2</button> 
-        </div>
         <div className='contents'>
           <Card mode="pic" open={openCard}/>
           <Card mode="pic" open={openCard}/>

@@ -2,11 +2,10 @@ import './profile.css'
 import Header from '../templent/header'
 import Footer from '../templent/footer'
 import Card from '../card'
-import { useState, useRef } from 'preact/hooks'
+import { useState, useRef, useEffect } from 'preact/hooks'
 
 export function Profile() {
-    const [isPost,setIsPost] = useState(true)
-    const elementRefs = Array.from({ length: 3 }, () => useRef(null));
+    const elementRefs = Array.from({ length: 2 }, () => useRef(null));
     const [mode, setMode] = useState('post')
     const handleElementClick = (clickedIndex) => {
         elementRefs.forEach((ref, index) => {
@@ -20,15 +19,7 @@ export function Profile() {
           }
         });
       };
-      
-    function toPost() {
-        setIsPost(true)
-    }
-    
-    function toVideo() {
-        setIsPost(false)
-    }
-    
+      useEffect(() => {handleElementClick(0)},[])
     return(
         <>
             <Header />
@@ -36,10 +27,8 @@ export function Profile() {
                 <p className='page-text'>Profile</p>
                 <button onClick={() => {handleElementClick(0);setMode('post')}}  ref={elementRefs[0]} key={0}>My Post</button> 
                 <button onClick={() => {handleElementClick(1);setMode('video')}} ref={elementRefs[1]} key={1}>My Video</button> 
-                <button onClick={() => {handleElementClick(2);setMode('user')}} ref={elementRefs[2]} key={2}>Edit Profile</button>
             </div>
             <div className='contents'>
-                {console.log(isPost)}
                 {mode == 'post' &&
                 <>
                     <Card mode="pic" isPro={true}/>
@@ -62,7 +51,14 @@ export function Profile() {
                 }
                 {mode == 'user' &&
                 <div className='user-edit'>
-                    
+                    <div className='photo-edit'>
+                        <img src={localStorage.getItem('photoURL')} alt="profilePic" />
+                        <b style={{paddingLeft:"10px"}}>{localStorage.getItem('username')}<br /><p style={{margin:"0",fontWeight:"normal",cursor:"pointer"}}>Change Profile</p></b>
+                    </div>
+                    <div>
+                        <b>Description</b>
+                        <p>Description</p>
+                    </div>
                 </div>
                 }
             </div>

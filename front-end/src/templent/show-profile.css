@@ -1,0 +1,31 @@
+.main-edit-profile {
+    width: 95%;height: 350px;
+    max-width: 300px;
+    border-radius: 10px;
+    background-color: blanchedalmond;
+    margin-bottom: 10px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    justify-content: space-around;
+    align-items: center;
+    top: 50%;left: 50%;transform: translate(-50%,-50%);
+}
+
+.main-edit-profile img {
+    height: 60px;
+    border-radius: 50%;
+    margin: 0;
+}
+
+.main-edit-profile div {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.edit:hover {
+    color: orange;
+}
