@@ -130,7 +130,7 @@ function Header() {
           {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} openPro={setIsOpenPro}/>}
         </button>
       </div>
-      {isOpenPro && <ShowProfile close={() => setIsOpenPro(false)} isEdit={false}/>}
+      {isOpenPro && <ShowProfile close={() => setIsOpenPro(false)} isEdit={true}/>}
     </>
   );
 }

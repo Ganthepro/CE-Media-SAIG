@@ -1,7 +1,9 @@
 import "./show-profile.css";
 import closePic from '../assets/close.png'
+import { useState, useRef } from "preact/hooks"
 
 function ShowProfile(props) {
+    const [toEdit,setToEdit] = useState(false)
     function closePop() {
         props.close()
         console.log("test")
@@ -23,17 +25,26 @@ function ShowProfile(props) {
             </div>
             <div>
                 <b>Description</b>
-                <p style={{width:"150px",fontSize:"15px",margin: "0"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. optio ad magni mollitia. Assumenda, neque.</p>
+                {toEdit && <input type={"text"} style={{width:"40%"}}></input>}
+                {!toEdit && <p style={{width:"150px",fontSize:"15px",margin: "0"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. optio ad magni mollitia. Assumenda, neque.</p>}
             </div>
             <div>
                 <b>Sex</b>
-                <p style={{fontSize:"15px",margin: "0"}}>Male</p>
+                {toEdit && <input type={"text"} style={{width:"40%"}}></input>}
+                {!toEdit && <p style={{fontSize:"15px",margin: "0"}}>Male</p>}
             </div>
             <div>
                 <b>Country</b>
-                <p style={{fontSize:"15px",margin: "0"}}>Thailand</p>
+                {toEdit && <input type={"text"} style={{width:"40%"}}></input>}
+                {!toEdit && <p style={{fontSize:"15px",margin: "0"}}>Thailand</p>}
             </div>
-            {props.isEdit && <b style={{cursor:"pointer"}} className='edit'>Edit</b>}
+            {props.isEdit && !toEdit &&<b style={{cursor:"pointer"}} className='edit' onClick={() => setToEdit(true)}>Edit</b>}
+            {props.isEdit && toEdit &&
+                <div style={{width:"60%"}}>
+                    <b style={{cursor:"pointer"}} className='edit' onClick={() => setToEdit(false)}>Apply</b>
+                    <b style={{cursor:"pointer"}} className='edit' onClick={() => setToEdit(false)}>Cancel</b>
+                </div> 
+            }
             {!props.isEdit && <a href={`/profile?id=${localStorage.getItem('username')}`} style={{color:"black",textDecoration:"none"}}><b style={{cursor:"pointer"}} className='edit'>View Post/Video</b></a>}
         </div>
         <div className="for-blur"></div>
