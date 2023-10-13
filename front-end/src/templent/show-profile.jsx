@@ -4,6 +4,7 @@ import closePic from '../assets/close.png'
 function ShowProfile(props) {
     function closePop() {
         props.close()
+        console.log("test")
     }
     
   return (
@@ -15,7 +16,7 @@ function ShowProfile(props) {
                 <b style={{width:"110px",wordBreak:"break-word",textAlign:"center"}}>
                 {localStorage.getItem("username")}
                 <br />
-                {props.isEdit && <p style={{ margin: "0", fontWeight: "normal", cursor: "pointer" }} className='edit'>
+                {props.isEdit && <p style={{ margin: "0", fontWeight: "normal", cursor: "pointer",fontSize:"small" }} className='edit'>
                     Change Profile
                 </p>}
                 </b>
@@ -33,6 +34,7 @@ function ShowProfile(props) {
                 <p style={{fontSize:"15px",margin: "0"}}>Thailand</p>
             </div>
             {props.isEdit && <b style={{cursor:"pointer"}} className='edit'>Edit</b>}
+            {!props.isEdit && <b style={{cursor:"pointer"}} className='edit'>View</b>}
         </div>
         <div className="for-blur"></div>
     </>

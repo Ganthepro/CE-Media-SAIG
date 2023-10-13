@@ -14,7 +14,7 @@ import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-d
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Users />// <Post/>
+        element: <Post />// <Post/>
     },
     {
         path: "/profile",

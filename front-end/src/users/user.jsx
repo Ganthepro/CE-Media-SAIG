@@ -2,7 +2,7 @@ import './user.css'
 
 function User(props) {
     return(
-        <div className='main-user' style={{background:props.backCol}}>
+        <div className='main-user' style={{background:props.backCol}} onClick={props.click}>
             <div className='sub-main'>
                 <img src={localStorage.getItem('photoURL')}/>
                 <h2>{localStorage.getItem('username')}</h2>

@@ -1,15 +1,6 @@
-.contents {
-    /* position: relative; */
+.contents-users {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* border: 2px solid red; */
-    height: calc((100vh - 80px - 35px - 45px) / 2); /* ถ้าตัวหาร == 2 ไม่ต้องเพิ่มตัวหารแล้ว*/
-}
-
-.push-footer {
-    position: relative;
-    height: calc((100vh - 80px - 35px - 45px) / 2 * 2); /* ถ้าตัวหาร == 3 ให้ * 2 เพิ่มขึ้นเรื่อย ๆ */
-    width: 100%;
-    border: 2px solid red;
+    flex-wrap: wrap;
 }
