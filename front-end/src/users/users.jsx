@@ -16,6 +16,7 @@ export function Users() {
                 <p className='page-text'>Users</p>
             </div>
             <div className='contents-users'>
+                {/* Qurry จาก Database */}
                 {/* index % 2 == 0 ?  */}
                 <User backCol={"bisque"} click={() => setIsOpenPro(true)} />
                 <User backCol={"rgb(255, 219, 175)"} click={() => setIsOpenPro(true)} />
