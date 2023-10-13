@@ -3,6 +3,7 @@ import { Post } from "./post/post.jsx";
 import { Video } from "./video/video.jsx";
 import { Profile } from "./profile/profile.jsx";
 import { Users } from "./users/users.jsx";
+import { Upload } from "./upload/upload.jsx";
 import BigCard from "./big_card.jsx";
 import Comment from "./comment.jsx";
 import Login from "./templent/login.jsx";
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/user",
     element: <Users />,
+  },
+  {
+    path: "/upload",
+    element: <Upload />,
   },
 ]);
 
