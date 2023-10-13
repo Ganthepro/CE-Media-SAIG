@@ -59,6 +59,7 @@ function Header() {
             const user = result.user;
             localStorage.setItem('photoURL', user.photoURL);
             localStorage.setItem('username', user.displayName);
+            // ใส่ Timestamp
             setprofilePicURL(localStorage.getItem('photoURL'))
             setUsername(localStorage.getItem('username'))
             // ...

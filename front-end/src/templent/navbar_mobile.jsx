@@ -10,7 +10,7 @@ function Navbar(props) {
         <>
             <div className='main-navbar'>
                 <h4>{props.userName}</h4>
-                <a href="/profile">Profile</a>
+                <a href={`/profile?id=${props.userName}`}>Profile</a>
                 <button onClick={() => props.openPro(true)}>Edit Profile</button>
                 <a href="https://www.google.com">Post</a>
                 <button onClick={handleSignOutClick}>Sign Out</button>
