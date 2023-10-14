@@ -4,6 +4,8 @@ import closePic from '../assets/close.png'
 import { useRef } from 'preact/hooks'
 
 function Login(props) {
+    const userInput = useRef(null)
+    const passInput = useRef(null)
     function close() {
         props.closeFunc()
     }
@@ -18,20 +20,56 @@ function Login(props) {
         })
         .then(response => response.text())
         .then(data => {
-            console.log(data)
             if (data != 'User not found') {
+                console.log(data)
                 localStorage.setItem('id', JSON.parse(data).id);
+                localStorage.setItem('photoURL',JSON.parse(data).profilePic)
+                localStorage.setItem('username',JSON.parse(data).username)
                 props.setisLogin(true)
+                props.setUser(localStorage.getItem('username'))
+                props.setImg(localStorage.getItem('photoURL'))
             }
         })
+        close()
     }
-    
     function signUp() {
-        
+        const userValue = userInput.current.value
+        const passValue = passInput.current.value
+        fetch(`http://localhost:5500/getPublic/${userValue}`, {
+          method: "GET"
+        })
+        .then(response => response.text())
+        .then(async data => {
+            if (data == 'User not found') {
+                localStorage.setItem('id', Date.now().toString());
+                localStorage.setItem('photoURL','/user.png')
+                localStorage.setItem('username',userValue)
+                props.setisLogin(true)
+                props.setUser(localStorage.getItem('username'))
+                props.setImg(localStorage.getItem('photoURL'))
+                const data = {
+                  username: localStorage.getItem('username'),
+                  password: passValue,
+                  id: localStorage.getItem('id'),
+                  profilePic: localStorage.getItem('photoURL'),
+                }
+                await fetch("http://localhost:5500/newUser", {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+                })
+                .then(response => {
+                  if (!response.ok) 
+                    throw new Error('Failed to fetch data');
+                })
+            }
+            else {}
+        })
+        close()
     }
 
-    const userInput = useRef(null)
-    const passInput = useRef(null)
     return(
         <>
             <div className='main-login'>

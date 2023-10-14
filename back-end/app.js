@@ -58,30 +58,37 @@ app.get('/loginGoogle/:input', (req, res) => {
 app.get('/login/:user/:pass', (req, res) => {
     const { user, pass } = req.params; 
     User.findOne({ username: user, password: pass })
-      .then((user) => {
+        .then((user) => {
+            if (!user) {
+            console.log('User not found');
+            res.send(false);
+            }
+            console.log('User found:', user);
+        })
+        .catch((err) => {
+            console.error('Error querying user:', err);
+            res.status(500).send('Internal Server Error');
+        });
+    UserPublic.findOne({ username: user })
+        .then((user) => {
         if (!user) {
-          console.log('User not found');
-          res.send(false);
+            console.log('User not found');
+            res.send(false);
         }
-        console.log('User found:', user);
-        res.send(true)
-      })
-      .catch((err) => {
+        res.json(user)
+        })
+        .catch((err) => {
         console.error('Error querying user:', err);
         res.status(500).send('Internal Server Error');
-      });
+        });
 });
 
-app.post('/signup', (req,res) => {
-    const data = req.body;
-})
-
-app.get('/getPublic/:id', (req, res) => {
-    UserPublic.findOne({ id: req.params.id }) 
+app.get('/getPublic/:input', (req, res) => {
+    UserPublic.findOne({ $or: [{ id: req.params.input }, { username: req.params.input }] })
     .then((user) => {
         if (!user) {
             console.log('User not found');
-            return res.status(404).send('User not found');
+            return res.send('User not found');
         }
         console.log('User found:', user);
         res.json(user); // Send the user data as JSON
@@ -96,7 +103,7 @@ app.post('/newUser', (req, res) => {
     const data = req.body;
     const newUser = new User({
         username : data.username,
-        password : data.password,
+        password : data.password == null ? "qwertyuiop" : data.password,
         id : data.id,
     });
     const newPublicData = new UserPublic({

@@ -1,6 +1,6 @@
 import "./header.css";
 import { useState, useEffect } from "preact/hooks";
-// import userPic from "...../CE-Media-Source/user.png";
+import React from 'react';
 import userPic from "../assets/user.png";
 import CE_logoPic from "../assets/ce_logo.png";
 import { initializeApp } from "firebase/app";
@@ -45,7 +45,7 @@ function Header() {
     if (isNew) {
       const data = {
         username: localStorage.getItem('username'),
-        password: localStorage.getItem('id'),
+        password: null,
         id: localStorage.getItem('id'),
         profilePic: localStorage.getItem('photoURL'),
       }
@@ -146,7 +146,7 @@ function Header() {
 
   return (
     <>
-      {isOpenLog && <Login closeFunc={closeLog} googleSignIn={googleSingIn} setisLogin={setIsLogin} />}
+      {isOpenLog && <Login closeFunc={closeLog} googleSignIn={googleSingIn} setisLogin={setIsLogin} setUser={setUsername} setImg={setprofilePicURL} isNew={setIsNew}/>}
       <div className="main-header">
         <a href="/" style={{color:"black"}}>
           <h1>CE Media</h1>
@@ -164,7 +164,7 @@ function Header() {
           </a>
         </div>
         <button className="user" onClick={click}>
-          <img src={!isLogin ? userPic : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
+          <img src={!isLogin ? userPic : profilePicURL.startsWith('/') ? process.env.PUBLIC_URL + profilePicURL : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
           <p style={{marginTop:"0"}}>{isLogin ? "Signed In" : "Sign In/Up"}</p>
           {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} openPro={setIsOpenPro}/>}
         </button>
