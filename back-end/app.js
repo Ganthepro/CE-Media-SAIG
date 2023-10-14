@@ -128,6 +128,23 @@ app.post('/newUser', (req, res) => {
         });
 });
 
+app.put('/update', (req, res) => {
+    const data = req.body;
+    UserPublic.updateOne(
+        { id: data.id },
+        { $set: {sex: data.sex, country: data.country, description: data.description} }
+    )
+    .then(result => {
+        console.log('Documents updated:', result);
+        res.send('Update successful');
+    })
+    .catch(err => {
+        console.error('Error updating documents:', err);
+        res.status(500).json({ error: 'Error updating documents' });
+    });
+});
+
+
 // Use Multer for handling file uploads
 const storage = multer.memoryStorage(); // Store files in memory for this example
 const upload = multer({ storage: storage });

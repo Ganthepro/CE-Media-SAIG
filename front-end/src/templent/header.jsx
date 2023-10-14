@@ -41,6 +41,13 @@ function Header() {
   const [isOpenLog,setIsOpenLog] = useState(false)
   const [isOpenPro,setIsOpenPro] = useState(false)
   const [isNew, setIsNew] = useState(false)
+  // useEffect(() => {
+  //   if (localStorage.getItem('username') != '') {
+  //     setIsLogin(true)
+  //     console.log(isLogin)
+  //   }
+  // },[])
+  
   useEffect(async () => {
     if (isNew) {
       const data = {
@@ -115,6 +122,12 @@ function Header() {
           });
       } else {
         setIsLogin(false);
+      } 
+      if (localStorage.getItem('username') != '' && localStorage.getItem('username') != null) {
+        setIsLogin(true)
+        setUsername(localStorage.getItem('username'))
+        setprofilePicURL(localStorage.getItem('photoURL'))
+        // console.log(localStorage.getItem('username'))
       }
     });
   }, [auth]);
@@ -134,14 +147,15 @@ function Header() {
     setIsOpenLog(false)
   }
 
-  function handleSignOut() {
-    signOut(auth)
+  async function handleSignOut() {
+    await signOut(auth)
       .then(() => {
         setIsNav(false)
         setIsLogin(false)
         localStorage.clear()
       })
       .catch((error) => {});
+    window.location.href = '/'
   }
 
   return (
