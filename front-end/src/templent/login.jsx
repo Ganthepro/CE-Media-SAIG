@@ -28,6 +28,8 @@ function Login(props) {
                 props.setisLogin(true)
                 props.setUser(localStorage.getItem('username'))
                 props.setImg(localStorage.getItem('photoURL'))
+            } else {
+                alert("Username or Password is not correct")
             }
         })
         close()
@@ -64,8 +66,10 @@ function Login(props) {
                   if (!response.ok) 
                     throw new Error('Failed to fetch data');
                 })
+                alert("Sign Up Successful")
             }
-            else {}
+            else 
+                alert("Username is already used")
         })
         close()
     }

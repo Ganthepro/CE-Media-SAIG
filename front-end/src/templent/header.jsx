@@ -164,7 +164,7 @@ function Header() {
           </a>
         </div>
         <button className="user" onClick={click}>
-          <img src={!isLogin ? userPic : profilePicURL.startsWith('/') ? process.env.PUBLIC_URL + profilePicURL : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
+          <img src={!isLogin ? userPic : profilePicURL != null && profilePicURL.startsWith('/') ? '/profilePic' + profilePicURL : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
           <p style={{marginTop:"0"}}>{isLogin ? "Signed In" : "Sign In/Up"}</p>
           {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} openPro={setIsOpenPro}/>}
         </button>

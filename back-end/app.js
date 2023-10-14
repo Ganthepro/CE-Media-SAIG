@@ -44,43 +44,39 @@ app.get('/loginGoogle/:input', (req, res) => {
     .then((user) => {
         if (!user) {
             console.log('User not found');
-            return res.status(404).send('User not found');
+            return res.send('User not found');
         }
         console.log('User found:', user);
-        res.json(user); // Send the user data as JSON
+        return res.json(user); // Send the user data as JSON
     })
     .catch((err) => {
         console.error('Error querying user:', err);
-        res.status(500).send('Internal Server Error'); // Handle the error
+        return res.send('Internal Server Error'); // Handle the error
     });
 });
 
-app.get('/login/:user/:pass', (req, res) => {
+app.get('/login/:user/:pass',async (req, res) => {
+    let flag = false
     const { user, pass } = req.params; 
-    User.findOne({ username: user, password: pass })
+    await User.findOne({ username: user, password: pass })
         .then((user) => {
             if (!user) {
-            console.log('User not found');
-            res.send(false);
+                console.log('User not found');
+                flag = true
+                return res.send("User not found");
             }
             console.log('User found:', user);
         })
         .catch((err) => {
             console.error('Error querying user:', err);
-            res.status(500).send('Internal Server Error');
-        });
-    UserPublic.findOne({ username: user })
-        .then((user) => {
-        if (!user) {
-            console.log('User not found');
-            res.send(false);
-        }
-        res.json(user)
-        })
-        .catch((err) => {
-        console.error('Error querying user:', err);
-        res.status(500).send('Internal Server Error');
-        });
+            return res.send('Internal Server Error');
+    });
+    if (!flag) {
+        UserPublic.findOne({ username: user })
+            .then((user) => {
+                return res.json(user)
+            })      
+    }
 });
 
 app.get('/getPublic/:input', (req, res) => {
@@ -91,11 +87,11 @@ app.get('/getPublic/:input', (req, res) => {
             return res.send('User not found');
         }
         console.log('User found:', user);
-        res.json(user); // Send the user data as JSON
+        return res.json(user); // Send the user data as JSON
     })
     .catch((err) => {
         console.error('Error querying user:', err);
-        res.status(500).send('Internal Server Error'); // Handle the error
+        return res.send('Internal Server Error'); // Handle the error
     });
 })
 
@@ -117,20 +113,18 @@ app.post('/newUser', (req, res) => {
     newUser.save()
         .then((result) => {
             console.log('New user saved:', result);
-            res.status(201).json(result); // Respond with the saved user as JSON
         })
         .catch((err) => {
             console.error('Error saving user:', err);
-            res.status(500).json({ error: 'Internal Server Error' }); // Handle the error and respond with JSON
         });
     newPublicData.save()
         .then((result) => {
             console.log('New user saved:', result);
-            res.status(201).json(result); // Respond with the saved user as JSON
+            return res.json(result); // Respond with the saved user as JSON
         })
         .catch((err) => {
             console.error('Error saving user:', err);
-            res.status(500).json({ error: 'Internal Server Error' }); // Handle the error and respond with JSON
+            return res.json({ error: 'Internal Server Error' }); // Handle the error and respond with JSON
         });
 });
 
@@ -140,11 +134,11 @@ const upload = multer({ storage: storage });
 
 app.post('/uploadProfilePic', upload.single('file'), (req, res) => {
     if (!req.file) {
-        return res.status(400).send('No file uploaded');
+        return res.send('No file uploaded');
     }
 
     console.log('File uploaded:', req.file);
-    res.status(200).send('File uploaded');
+    return res.send('File uploaded');
 });
 
 app.listen(5500, () => console.log("Server started on port 5500"));
