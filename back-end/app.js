@@ -24,14 +24,23 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: String,
   password: String,
-  id: Number,
-  profilePic: String,
+  id: String,
 });
 
-const User = mongoose.model('User', userSchema);
+const publicSchema = new Schema({
+  description: String,
+  sex: String,
+  country: String,
+  id: String,
+  profilePic: String,
+  username: String,
+});
 
-app.get('/getUser/:userName', (req, res) => {
-    User.findOne({ username: req.params.userName }) // Use findOne instead of find
+const User = mongoose.model('User', userSchema, "users");
+const UserPublic = mongoose.model('UserPublic', publicSchema, "publicData");
+
+app.get('/loginGoogle/:input', (req, res) => {
+    User.findOne({ username: req.params.input }) // Use findOne instead of find
     .then((user) => {
         if (!user) {
             console.log('User not found');
@@ -46,16 +55,68 @@ app.get('/getUser/:userName', (req, res) => {
     });
 });
 
+app.get('/login/:user/:pass', (req, res) => {
+    const { user, pass } = req.params; 
+    User.findOne({ username: user, password: pass })
+      .then((user) => {
+        if (!user) {
+          console.log('User not found');
+          res.send(false);
+        }
+        console.log('User found:', user);
+        res.send(true)
+      })
+      .catch((err) => {
+        console.error('Error querying user:', err);
+        res.status(500).send('Internal Server Error');
+      });
+});
+
+app.post('/signup', (req,res) => {
+    const data = req.body;
+})
+
+app.get('/getPublic/:id', (req, res) => {
+    UserPublic.findOne({ id: req.params.id }) 
+    .then((user) => {
+        if (!user) {
+            console.log('User not found');
+            return res.status(404).send('User not found');
+        }
+        console.log('User found:', user);
+        res.json(user); // Send the user data as JSON
+    })
+    .catch((err) => {
+        console.error('Error querying user:', err);
+        res.status(500).send('Internal Server Error'); // Handle the error
+    });
+})
+
 app.post('/newUser', (req, res) => {
-    const data = req.body; // Extract data from the request body
-    console.log(data.username)
+    const data = req.body;
     const newUser = new User({
         username : data.username,
         password : data.password,
         id : data.id,
-        profilePic : data.profilePic,
     });
+    const newPublicData = new UserPublic({
+        description: "-",
+        sex: "-",
+        country: "-",
+        id : data.id,
+        profilePic : data.profilePic,
+        username : data.username,
+    })
     newUser.save()
+        .then((result) => {
+            console.log('New user saved:', result);
+            res.status(201).json(result); // Respond with the saved user as JSON
+        })
+        .catch((err) => {
+            console.error('Error saving user:', err);
+            res.status(500).json({ error: 'Internal Server Error' }); // Handle the error and respond with JSON
+        });
+    newPublicData.save()
         .then((result) => {
             console.log('New user saved:', result);
             res.status(201).json(result); // Respond with the saved user as JSON

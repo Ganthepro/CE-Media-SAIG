@@ -1,5 +1,6 @@
 import "./header.css";
 import { useState, useEffect } from "preact/hooks";
+// import userPic from "...../CE-Media-Source/user.png";
 import userPic from "../assets/user.png";
 import CE_logoPic from "../assets/ce_logo.png";
 import { initializeApp } from "firebase/app";
@@ -42,11 +43,10 @@ function Header() {
   const [isNew, setIsNew] = useState(false)
   useEffect(async () => {
     if (isNew) {
-      console.log("test")
       const data = {
         username: localStorage.getItem('username'),
-        password: Date.now().toString(),
-        id: Date.now(),
+        password: localStorage.getItem('id'),
+        id: localStorage.getItem('id'),
         profilePic: localStorage.getItem('photoURL'),
       }
       await fetch("http://localhost:5500/newUser", {
@@ -85,16 +85,20 @@ function Header() {
             // ใส่ Timestamp
             setprofilePicURL(localStorage.getItem('photoURL'))
             setUsername(localStorage.getItem('username'))
-            fetch(`http://localhost:5500/getUser/${localStorage.getItem('username')}`, {
+            fetch(`http://localhost:5500/loginGoogle/${localStorage.getItem('username')}`, {
               method: "GET",
             })
             .then(response => response.text())
             .then(data => {
               console.log(data)
-              if (data == 'User not found') 
+              if (data == 'User not found') {
                 setIsNew(true) 
-              else 
-                setIsNew(false)  
+                localStorage.setItem('id', Date.now().toString());
+              }
+              else {
+                setIsNew(false)
+                localStorage.setItem('id', JSON.parse(data).id);
+              }
             })
             .catch(error => {
               console.error(error);
@@ -142,7 +146,7 @@ function Header() {
 
   return (
     <>
-      {isOpenLog && <Login closeFunc={closeLog} googleSignIn={googleSingIn} />}
+      {isOpenLog && <Login closeFunc={closeLog} googleSignIn={googleSingIn} setisLogin={setIsLogin} />}
       <div className="main-header">
         <a href="/" style={{color:"black"}}>
           <h1>CE Media</h1>
