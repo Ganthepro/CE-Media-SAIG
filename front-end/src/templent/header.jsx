@@ -39,6 +39,29 @@ function Header() {
   const [isNav, setIsNav] = useState(false)
   const [isOpenLog,setIsOpenLog] = useState(false)
   const [isOpenPro,setIsOpenPro] = useState(false)
+  const [isNew, setIsNew] = useState(false)
+  useEffect(async () => {
+    if (isNew) {
+      console.log("test")
+      const data = {
+        username: localStorage.getItem('username'),
+        password: Date.now().toString(),
+        id: Date.now(),
+        profilePic: localStorage.getItem('photoURL'),
+      }
+      await fetch("http://localhost:5500/newUser", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (!response.ok) 
+          throw new Error('Failed to fetch data');
+      })
+    }
+  },[isNew])
   
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -62,10 +85,22 @@ function Header() {
             // ใส่ Timestamp
             setprofilePicURL(localStorage.getItem('photoURL'))
             setUsername(localStorage.getItem('username'))
-            // ...
+            fetch(`http://localhost:5500/getUser/${localStorage.getItem('username')}`, {
+              method: "GET",
+            })
+            .then(response => response.text())
+            .then(data => {
+              console.log(data)
+              if (data == 'User not found') 
+                setIsNew(true) 
+              else 
+                setIsNew(false)  
+            })
+            .catch(error => {
+              console.error(error);
+            });
           })
           .catch((error) => {
-            // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
             // The email of the user's account used.

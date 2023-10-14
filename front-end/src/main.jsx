@@ -16,13 +16,12 @@ import {
   RouterProvider,
   Route,
   Link,
-  useLocation,
 } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Post />, // <Post/>
+    element: <Post />,
   },
   { path: "/profile", element: <Profile /> },
   {

@@ -1,5 +1,4 @@
 import './navbar_mobile.css'
-import { useState } from 'preact/hooks'
 
 function Navbar(props) {
     function handleSignOutClick() {
@@ -15,7 +14,6 @@ function Navbar(props) {
                 <a href="/upload">Upload</a>
                 <button onClick={handleSignOutClick}>Sign Out</button>
             </div>
-            {/* {console.log(isOpenEdit)} */}
         </>
     )
 }
