@@ -8,7 +8,7 @@ function Navbar(props) {
     return(
         <>
             <div className='main-navbar'>
-                <h4>{props.userName}</h4>
+                <h4 style={{margin: '0'}}>{props.userName}</h4>
                 <a href={`/profile?id=${props.userName}`}>Profile</a>
                 <button onClick={() => props.openPro(true)}>Edit Profile</button>
                 <a href="/upload">Upload</a>

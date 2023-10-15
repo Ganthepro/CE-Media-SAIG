@@ -40,13 +40,31 @@ function Header() {
   const [isNav, setIsNav] = useState(false)
   const [isOpenLog,setIsOpenLog] = useState(false)
   const [isOpenPro,setIsOpenPro] = useState(false)
-  const [isNew, setIsNew] = useState(false)
-  // useEffect(() => {
-  //   if (localStorage.getItem('username') != '') {
-  //     setIsLogin(true)
-  //     console.log(isLogin)
-  //   }
-  // },[])
+  const [isNew,setIsNew] = useState(false)
+  async function getItem() {
+    await fetch(`http://localhost:5500/getPublic/${localStorage.getItem('id')}`, {
+      method: "GET",
+    })
+      .then(response => response.text())
+      .then(fetchedData => {
+          if (fetchedData !== 'User not found') {
+            const data = JSON.parse(fetchedData);
+            localStorage.setItem('username',data.username)
+            localStorage.setItem('id',data.id)
+            localStorage.setItem('photoURL',data.profilePic)
+            console.log(localStorage.getItem('photoURL'))
+            setprofilePicURL(localStorage.getItem('photoURL'))
+            setUsername(localStorage.getItem('username'))
+          }
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
+  
+  useEffect(() => {
+    getItem()
+  },[isOpenPro])
   
   useEffect(async () => {
     if (isNew) {
@@ -67,11 +85,13 @@ function Header() {
         if (!response.ok) 
           throw new Error('Failed to fetch data');
       })
-    }
+    } 
+    else 
+      getItem()
   },[isNew])
   
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+  useEffect(async () => {
+    await onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLogin(true);
         try {
@@ -87,10 +107,8 @@ function Header() {
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            localStorage.setItem('photoURL', user.photoURL);
             localStorage.setItem('username', user.displayName);
             // ใส่ Timestamp
-            setprofilePicURL(localStorage.getItem('photoURL'))
             setUsername(localStorage.getItem('username'))
             fetch(`http://localhost:5500/loginGoogle/${localStorage.getItem('username')}`, {
               method: "GET",
@@ -101,10 +119,13 @@ function Header() {
               if (data == 'User not found') {
                 setIsNew(true) 
                 localStorage.setItem('id', Date.now().toString());
+                localStorage.setItem('photoURL', user.photoURL);
+                setprofilePicURL(localStorage.getItem('photoURL'))
               }
               else {
                 setIsNew(false)
-                localStorage.setItem('id', JSON.parse(data).id);
+                localStorage.setItem('id', JSON.parse(data).id)
+                getItem()
               }
             })
             .catch(error => {
@@ -127,7 +148,6 @@ function Header() {
         setIsLogin(true)
         setUsername(localStorage.getItem('username'))
         setprofilePicURL(localStorage.getItem('photoURL'))
-        // console.log(localStorage.getItem('username'))
       }
     });
   }, [auth]);

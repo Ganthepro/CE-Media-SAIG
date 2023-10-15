@@ -1,5 +1,6 @@
 import "./show-profile.css";
 import closePic from "../assets/close.png";
+import userPic from '../assets/user.png'
 import { useState, useEffect, useRef } from "preact/hooks";
 
 function ShowProfile(props) {
@@ -9,27 +10,34 @@ function ShowProfile(props) {
   const descriptionRef = useRef(null)
   const sexRef = useRef(null)
   const countryRef = useRef(null)
+  const inputPic = useRef(null)
   function closePop() {
     props.close();
   }
   
-  useEffect(() => {
-    if (!toEdit) {
-      fetch(`http://localhost:5500/getPublic/${localStorage.getItem('id')}`, {
-        method: "GET",
+  async function getItem() {
+    console.log(localStorage.getItem('id'))
+    await fetch(`http://localhost:5500/getPublic/${localStorage.getItem('id')}`, {
+      method: "GET",
+    })
+      .then(response => response.text())
+      .then(fetchedData => {
+          if (fetchedData !== 'User not found') {
+            setData(JSON.parse(fetchedData));
+            console.log(data.username)
+          }
       })
-        .then(response => response.text())
-        .then(fetchedData => {
-            if (fetchedData !== 'id not found') 
-                setData(JSON.parse(fetchedData));
-        })
-        .catch(error => {
-          console.error(error);
-        })
-        .finally(() => {
-          setIsLoading(false); // Set loading to false when data is fetched
-        });
-    }
+      .catch(error => {
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false); // Set loading to false when data is fetched
+      });
+  }
+  
+  useEffect(() => {
+    if (!toEdit) 
+      getItem()
   }, [toEdit]);
   
   async function updateData() {
@@ -39,7 +47,6 @@ function ShowProfile(props) {
       country : countryRef.current.value,
       id : localStorage.getItem('id')
     }
-    console.log(data)
     await fetch('http://localhost:5500/update',{
       method: 'PUT',
       body: JSON.stringify(data) ,
@@ -56,6 +63,33 @@ function ShowProfile(props) {
     setToEdit(false)
   }
   
+  async function uploadProfilePic() {
+    const formData = new FormData();
+    const fileInput = inputPic.current;
+    if (!fileInput || !fileInput.files || !fileInput.files[0]) {
+      alert("No file selected");
+      return;
+    }
+    formData.append('image', fileInput.files[0]);
+    let im;
+    await fetch(`http://localhost:5500/uploadProfilePic/${localStorage.getItem('id')}`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.blob())
+      .then(data => {
+        console.log(data);
+        im = data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    if (im) {
+      const imageUrl = URL.createObjectURL(im);
+    }
+    await getItem();
+  }
+  
   return (
     <>
       <div className="main-edit-profile">
@@ -66,40 +100,36 @@ function ShowProfile(props) {
             top: "10px",
             right: "10px",
             height: "20px",
+            width: "20px",
             cursor: "pointer",
           }}
           onClick={closePop}
         />
-        <div style={{ width: "200px" }}>
-          <img src={isLoading ? null : data.profilePic != null && data.profilePic.startsWith('/') ? '/profilePic' + data.profilePic : data.profilePic} alt="profilePic" />
-          <b
-            style={{
-              width: "110px",
-              wordBreak: "break-word",
-              textAlign: "center",
-            }}
-          >
-            {isLoading ? "Loading" : data.username}
-            <br />
-            {props.isEdit && (
-              <p
-                style={{
-                  margin: "0",
-                  fontWeight: "normal",
-                  cursor: "pointer",
-                  fontSize: "small",
-                }}
-                className="edit"
-              >
-                Change Profile
-              </p>
-            )}
-          </b>
+        <div style={{ width: "225px"}}>
+          <img src={isLoading ? null : data.profilePic == null ? userPic : data.profilePic.startsWith('/') ? '/profilePic' + data.profilePic : data.profilePic} alt="profilePic" />
+          <div style={{display:"flex",justifyContent:"space-around",flexDirection:"column",width:"130px"}}>
+            <b
+              style={{
+                width: "110px",
+                wordBreak: "break-word",
+                textAlign: "center",
+              }}
+            >
+              {isLoading ? "Loading" : data.username}
+              <br />
+            </b>
+            {props.isEdit &&  
+              <>
+                <input id="picture-input-profile" type="file" name="picture" ref={inputPic} onChange={uploadProfilePic}/>
+                <label for="picture-input-profile" id="picture-input-profile-label">Change Profile</label>
+              </>
+            }
+          </div>
         </div>
         <div>
           <b>Description</b>
           {toEdit && <input type={"text"} style={{ width: "40%" }} ref={descriptionRef} />}
-          {!toEdit && (<p style={{ width: "150px", fontSize: "15px", margin: "0",textAlign:"center" }}>{isLoading ? "Loading" : data.description}</p>)}
+          {!toEdit && (<p style={{ width: "150px", fontSize: "15px", margin: "0",textAlign:"center",wordWrap:"break-word" }}>{isLoading ? "Loading" : data.description}</p>)}
         </div>
         <div>
           <b>Sex</b>

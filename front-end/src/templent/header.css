@@ -84,7 +84,7 @@
         position: absolute;
         left: 50%;top: 50%;transform: translate(-50%,-50%);
         margin: 0;
-        height: 80%;
+        height: 80%;aspect-ratio: 1/1;
     }
 }
 
@@ -103,7 +103,7 @@
         position: absolute;
         left: 0px;
         transform: translate(0,-50%);
-        height: 80%;
+        height: 80%;aspect-ratio: 1/1;
     }
 
     .user p {
