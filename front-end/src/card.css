@@ -42,6 +42,7 @@
 .pic-card img,
 .pic-card video {
     position: absolute;
+    margin: 0;
     height: 100%;
     left: 50%;transform: translate(-50%);
 }
@@ -79,10 +80,21 @@ hr {
     .main-card {
         width: 100%;
     }
+    .pic-card img,
+    .pic-card video {
+        aspect-ratio: 1,1;
+        width: auto;
+    }
+    .pic-card {
+        overflow: hidden;
+    }
 }
 
 @media (min-width: 570px) {
     .main-card {
         width: 400px;
+    }
+    .pic-card {
+        overflow: hidden;
     }
 }

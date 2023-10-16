@@ -2,19 +2,25 @@ import "./video.css";
 import Header from "../templent/header";
 import Footer from "../templent/footer";
 import Card from "../card";
-import BigCard from "../big_card";
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 
 export function Video() {
-  const [isOpenCard, setIsOpenCard] = useState(false);
+  const [data,setData] = useState([])
 
-  function openCard() {
-    setIsOpenCard(!isOpenCard);
-  }
-
+  useEffect(async () => {
+    await fetch('http://localhost:5500/getVideo',{method:"GET"})
+    .then(response => response.text())
+    .then(fetchedData => {
+        setData(JSON.parse(fetchedData))
+    })
+    .catch(error => {
+      console.error(error);
+    })
+  },[])
+  
   return (
     <>
-      <div style={isOpenCard && { filter: "blur(5px)" }}>
+      <div>
         <Header />
         <div className='bar'>
             <p className='page-text'>Video</p>
@@ -22,20 +28,14 @@ export function Video() {
             <button>recomment 2</button> 
         </div>
         <div className="contents">
-          <Card mode="video" open={openCard} />
-          <Card mode="video" open={openCard} />
-          <Card mode="video" open={openCard} />
-          <Card mode="video" open={openCard} />
-          <Card mode="video" open={openCard} />
-          <Card mode="video" open={openCard} />
+          {data.length > 0 &&
+            data.map((item) => {
+                return <Card mode="video" data={item} />
+            })
+          }
         </div>
         <Footer />
       </div>
-      {isOpenCard && (
-        <div className="big-card">
-          <BigCard mode="video" open={openCard} />
-        </div>
-      )}
     </>
   );
 }

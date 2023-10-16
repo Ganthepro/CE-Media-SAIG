@@ -45,7 +45,7 @@ const postSchema = new Schema({
   description: String,
   username: String, 
   id: String,
-  scr: String,
+  src: String,
 })
 
 const User = mongoose.model("User", userSchema, "users");
@@ -201,7 +201,27 @@ const uploadProfile = multer({ storage: storageProfile });
 const uploadPostPic = multer({ storage: storagePostPic });
 const uploadPostVideo = multer({ storage: storagePostVideo });
 
-app.post("/postVideo/:id",) // แก้ต่อ
+app.post("/postVideo/:id",uploadPostVideo.single('video'), async(req, res) => {
+  const data = JSON.parse(req.body.jsonData);
+  const file = req.file;
+  const newVideo = new Video({
+    title: data.title,
+    description: data.description,
+    username: data.username, 
+    id: req.params.id,
+    src: `/${req.params.id}${path.extname(file.originalname)}`,
+  });
+  await newVideo
+    .save()
+    .then((result) => {
+      console.log("New video saved:", result);
+      return res.send("Save successfully")
+    })
+    .catch((err) => {
+      console.error("Error saving video:", err);
+      return res.status(500).json({ error: "Error saving video" });
+    });
+})
 
 app.post("/postImage/:id",uploadPostPic.single("image"), async (req, res) => {
   const data = JSON.parse(req.body.jsonData);
@@ -211,7 +231,7 @@ app.post("/postImage/:id",uploadPostPic.single("image"), async (req, res) => {
     description: data.description,
     username: data.username, 
     id: req.params.id,
-    scr: `/${req.params.id}${path.extname(file.originalname)}`,
+    src: `/${req.params.id}${path.extname(file.originalname)}`,
   });
   await newPost
     .save()
@@ -281,5 +301,27 @@ app.post("/uploadProfilePic/:id", uploadProfile.single("image"), async (req, res
         });
     deleteOldProfilePic(oldIm)
 });
+
+app.get('/getPost', async (req, res) => {
+  try {
+    const posts = await Post.find({}).exec();
+    console.log('All posts:', posts);
+    return res.json(posts);
+  } catch (err) {
+    console.error('Error querying for posts:', err);
+    return res.status(500).json({ error: 'Error querying for posts' });
+  }
+})
+
+app.get('/getVideo', async (req, res) => {
+  try {
+    const videos = await Video.find({}).exec();
+    console.log('All videos:', videos);
+    return res.json(videos);
+  } catch (err) {
+    console.error('Error querying for videos:', err);
+    return res.status(500).json({ error: 'Error querying for videos' });
+  }
+})
 
 app.listen(5500, () => console.log("Server started on port 5500"));

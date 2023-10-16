@@ -6,19 +6,14 @@ import { useEffect, useState } from 'preact/hooks'
 
 export function Users() {
     const [data,setData] = useState([])
-    const [isLoading,setIsLoading] = useState(true)
     useEffect(async () => {
         await fetch('http://localhost:5500/getUsers',{method:"GET"})
         .then(response => response.text())
         .then(fetchedData => {
-            console.log(JSON.parse(fetchedData))
             setData(JSON.parse(fetchedData))
         })
         .catch(error => {
           console.error(error);
-        })
-        .finally(() => {
-            setIsLoading(false)
         })
     },[])
     
@@ -29,7 +24,7 @@ export function Users() {
                 <p className='page-text'>Users</p>
             </div>
             <div className='contents-users'>
-                {!isLoading && data.length > 0 &&
+                {data.length > 0 &&
                     data.map((item, index) => {
                         if (index % 2 == 0) 
                             return <User backCol={"bisque"} click={() => setIsOpenPro(true)} data={item} />

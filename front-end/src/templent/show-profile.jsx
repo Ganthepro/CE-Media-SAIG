@@ -77,6 +77,7 @@ function ShowProfile(props) {
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'no-cors'
     })
       .then(response => response.blob())
       .then(data => {

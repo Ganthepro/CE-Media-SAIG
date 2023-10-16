@@ -23,19 +23,21 @@ export function Upload() {
   useEffect(() => {handleElementClick(0)},[])
   
   const inputFile = useRef(null)
+  const inputFileVideo = useRef(null)
   const inputFileTitle = useRef(null)
   const inputFileDescription = useRef(null)
   const box = useRef(null)
   const boxErr = useRef(null)
+  const [isUpload,setIsUpload] = useState(false)
   
   function uploadPost() {
-    setFileInput(inputFile.current)
+    setFileInput(inputFile.current);
     if (!fileInput || !fileInput.files || !fileInput.files[0]) {
       alert("No file selected");
       return;
     }
-    box.current.style.backgroundImage = `url("${URL.createObjectURL(fileInput.files[0])}")`
-    boxErr.current.style.opacity = '0'
+    box.current.style.backgroundImage = `url("${URL.createObjectURL(fileInput.files[0])}")`;
+    boxErr.current.style.opacity = '0';
   }
   
   async function posted() {
@@ -49,19 +51,53 @@ export function Upload() {
     newFormData.append(mode, fileInput.files[0]);
     newFormData.append('jsonData', JSON.stringify(data));
     if (newFormData != null) {
-      console.log("test")
       await fetch(`http://localhost:5500/postImage/${Date.now().toString()}`, {
         method: "POST",
         body: newFormData,
       })
         .then(response => response.text())
         .then(data => {
-          console.log(data);
+          if (data == "Save successfully")
+            alert("Post Successfully")
+          else 
+            alert("Error")
         })
         .catch(error => {
           console.error(error);
         });
-      // await getItem(); 
+    }
+  }
+  
+  async function postedVideo() {
+    const file = await inputFileVideo.current
+    if (!file || !file.files || !file.files[0]) {
+      alert("No video selected");
+      return;
+    }
+    const newFormData = new FormData()
+    const data = {
+      title: inputFileTitle.current.value,
+      description: inputFileDescription.current.value,
+      username: localStorage.getItem('username'), 
+    }
+    newFormData.append(mode, file.files[0]);
+    newFormData.append('jsonData', JSON.stringify(data));
+    if (newFormData != null) {
+      console.log("test")
+      await fetch(`http://localhost:5500/postVideo/${Date.now().toString()}`, {
+        method: "POST",
+        body: newFormData,
+      })
+        .then(response => response.text())
+        .then(data => {
+          if (data == "Save successfully")
+            alert("Post Successfully")
+          else 
+            alert("Error")
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }
   
@@ -78,11 +114,21 @@ export function Upload() {
                 <div id="in-image" ref={box} >
                     <div id="err-box" ref={boxErr} >
                         <img src={uploadFilePic} id="err-box-im" />
-                        <p id="err-box-p">{`Upload ${mode == 'image' ? 'Image' : 'Video'}`}</p>
+                        <p id="err-box-p">{!isUpload ? `Upload ${mode == 'image' ? 'Image' : 'Video'}` : "Uploaded"}</p>
                     </div>
                     <div className="option" id="in-option">
-                        <input id="picture-input" type="file" name="picture" ref={inputFile} onChange={uploadPost} />
-                        <label for="picture-input">Choose File</label>
+                        {mode == 'image' &&
+                          <>
+                            <input id="picture-input" type="file" name="picture" ref={inputFile} onChange={uploadPost} accept='image/*' />
+                            <label for="picture-input" id="video-input-profile-label">Upload Image</label>
+                          </>
+                        }
+                        {mode != 'image' &&
+                          <>
+                            <input id="video-input" type="file" name="video" ref={inputFileVideo} onChange={postedVideo} accept='video/*' />
+                            <label for="video-input" id="video-input-profile-label">Upload and Post Video</label>
+                          </>
+                        }
                     </div>
                 </div>
             </div>
@@ -95,7 +141,9 @@ export function Upload() {
                 <label for="descirption-input">Descirption :</label>
                 <input type="text" id="descirption-input" className='input-text' style={{height:'100px'}} ref={inputFileDescription} />
               </div>
-              <button className='input-post' onClick={posted} >Post</button>
+              {mode == "image" &&
+                <button className='input-post' onClick={posted} >Post</button>
+              }
             </div>
           </div>
           <Footer />
