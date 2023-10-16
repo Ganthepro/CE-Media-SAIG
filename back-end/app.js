@@ -155,6 +155,17 @@ app.put("/update", (req, res) => {
     });
 });
 
+app.get('/getUsers', async (req, res) => {
+  try {
+    const users = await UserPublic.find({}).exec();
+    console.log('All users:', users);
+    return res.json(users);
+  } catch (err) {
+    console.error('Error querying for users:', err);
+    return res.status(500).json({ error: 'Error querying for users' });
+  }
+});
+
 const storage = multer.diskStorage({
   destination: path.join("../front-end/public", "profilePic"), // Define the destination folder
   filename: (req, file, cb) => {

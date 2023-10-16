@@ -52,7 +52,6 @@ function Header() {
             localStorage.setItem('username',data.username)
             localStorage.setItem('id',data.id)
             localStorage.setItem('photoURL',data.profilePic)
-            console.log(localStorage.getItem('photoURL'))
             setprofilePicURL(localStorage.getItem('photoURL'))
             setUsername(localStorage.getItem('username'))
           }
@@ -203,7 +202,7 @@ function Header() {
           {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} openPro={setIsOpenPro}/>}
         </button>
       </div>
-      {isOpenPro && <ShowProfile close={() => setIsOpenPro(false)} isEdit={true}/>}
+      {isOpenPro && <ShowProfile close={() => setIsOpenPro(false)} isEdit={true} id={localStorage.getItem('id')} />}
     </>
   );
 }

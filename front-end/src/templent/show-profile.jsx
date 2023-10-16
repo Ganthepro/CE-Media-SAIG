@@ -17,7 +17,7 @@ function ShowProfile(props) {
   
   async function getItem() {
     console.log(localStorage.getItem('id'))
-    await fetch(`http://localhost:5500/getPublic/${localStorage.getItem('id')}`, {
+    await fetch(`http://localhost:5500/getPublic/${props.id}`, {
       method: "GET",
     })
       .then(response => response.text())
