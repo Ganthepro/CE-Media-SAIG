@@ -71,22 +71,20 @@ function ShowProfile(props) {
       return;
     }
     formData.append('image', fileInput.files[0]);
-    let im;
     await fetch(`http://localhost:5500/uploadProfilePic/${localStorage.getItem('id')}`, {
       method: 'POST',
       body: formData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then(response => response.blob())
       .then(data => {
         console.log(data);
-        im = data;
       })
       .catch(error => {
         console.error(error);
       });
-    if (im) {
-      const imageUrl = URL.createObjectURL(im);
-    }
     await getItem();
   }
   
@@ -107,10 +105,10 @@ function ShowProfile(props) {
         />
         <div style={{ width: "225px"}}>
           <img src={isLoading ? null : data.profilePic == null ? userPic : data.profilePic.startsWith('/') ? '/profilePic' + data.profilePic : data.profilePic} alt="profilePic" />
-          <div style={{display:"flex",justifyContent:"space-around",flexDirection:"column",width:"130px"}}>
+          <div style={{display:"flex",justifyContent:"space-around",flexDirection:"column",maxWidth:"130px"}}>
             <b
               style={{
-                width: "110px",
+                maxWidth: "110px",
                 wordBreak: "break-word",
                 textAlign: "center",
               }}
@@ -129,7 +127,7 @@ function ShowProfile(props) {
         <div>
           <b>Description</b>
           {toEdit && <input type={"text"} style={{ width: "40%" }} ref={descriptionRef} />}
-          {!toEdit && (<p style={{ width: "150px", fontSize: "15px", margin: "0",textAlign:"center",wordWrap:"break-word" }}>{isLoading ? "Loading" : data.description}</p>)}
+          {!toEdit && (<p style={{ maxWidth: "150px", fontSize: "15px", margin: "0",textAlign:"center",wordWrap:"break-word" }}>{isLoading ? "Loading" : data.description}</p>)}
         </div>
         <div>
           <b>Sex</b>

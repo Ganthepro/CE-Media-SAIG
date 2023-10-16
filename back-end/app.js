@@ -40,8 +40,18 @@ const publicSchema = new Schema({
   username: String,
 });
 
+const postSchema = new Schema({
+  title: String,
+  description: String,
+  username: String, 
+  id: String,
+  scr: String,
+})
+
 const User = mongoose.model("User", userSchema, "users");
 const UserPublic = mongoose.model("UserPublic", publicSchema, "publicData");
+const Post = mongoose.model("Post", postSchema, "posts");
+const Video = mongoose.model("Video", postSchema, "videos");
 
 app.get("/loginGoogle/:input", (req, res) => {
   UserPublic.findOne({ username: req.params.input }) // Use findOne instead of find
@@ -166,14 +176,54 @@ app.get('/getUsers', async (req, res) => {
   }
 });
 
-const storage = multer.diskStorage({
+const storageProfile = multer.diskStorage({
   destination: path.join("../front-end/public", "profilePic"), // Define the destination folder
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage: storage });
+const storagePostPic = multer.diskStorage({
+  destination: path.join("../front-end/public", "postFolder"), // Define the destination folder
+  filename: (req, file, cb) => {
+    cb(null, req.params.id + path.extname(file.originalname));
+  },
+});
+
+const storagePostVideo = multer.diskStorage({
+  destination: path.join("../front-end/public", "videoFolder"), // Define the destination folder
+  filename: (req, file, cb) => {
+    cb(null, req.params.id + path.extname(file.originalname));
+  },
+});
+
+const uploadProfile = multer({ storage: storageProfile });
+const uploadPostPic = multer({ storage: storagePostPic });
+const uploadPostVideo = multer({ storage: storagePostVideo });
+
+app.post("/postVideo/:id",) // แก้ต่อ
+
+app.post("/postImage/:id",uploadPostPic.single("image"), async (req, res) => {
+  const data = JSON.parse(req.body.jsonData);
+  const file = req.file;
+  const newPost = new Post({
+    title: data.title,
+    description: data.description,
+    username: data.username, 
+    id: req.params.id,
+    scr: `/${req.params.id}${path.extname(file.originalname)}`,
+  });
+  await newPost
+    .save()
+    .then((result) => {
+      console.log("New post saved:", result);
+      return res.send("Save successfully")
+    })
+    .catch((err) => {
+      console.error("Error saving post:", err);
+      return res.status(500).json({ error: "Error saving post" });
+    });
+})
 
 async function checkImage(id) {
     let im = null
@@ -212,7 +262,7 @@ function deleteOldProfilePic(im) {
     });
 }
 
-app.post("/uploadProfilePic/:id", upload.single("image"), async (req, res) => {
+app.post("/uploadProfilePic/:id", uploadProfile.single("image"), async (req, res) => {
     const file = req.file;
     if (!file) return res.status(400).json({ error: "No file provided" });
     const oldIm = await checkImage(req.params.id);
