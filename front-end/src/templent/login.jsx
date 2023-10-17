@@ -15,29 +15,29 @@ function Login(props) {
     }
     
     function signIn() {
-        fetch(`http://localhost:5500/login/${userInput.current.value}/${passInput.current.value}`, {
+        fetch(`http://${import.meta.env.VITE_HOST}:5500/login/${userInput.current.value}/${passInput.current.value}`, {
           method: "GET",
         })
         .then(response => response.text())
         .then(data => {
             if (data != 'User not found') {
-                console.log(data)
                 localStorage.setItem('id', JSON.parse(data).id);
                 localStorage.setItem('photoURL',JSON.parse(data).profilePic)
                 localStorage.setItem('username',JSON.parse(data).username)
                 props.setisLogin(true)
                 props.setUser(localStorage.getItem('username'))
                 props.setImg(localStorage.getItem('photoURL'))
-            } else {
+                alert("Sign In Successful")
+            } 
+            else 
                 alert("Username or Password is not correct")
-            }
         })
         close()
     }
     function signUp() {
         const userValue = userInput.current.value
         const passValue = passInput.current.value
-        fetch(`http://localhost:5500/getPublic/${userValue}`, {
+        fetch(`http://${import.meta.env.VITE_HOST}:5500/getPublic/${userValue}`, {
           method: "GET"
         })
         .then(response => response.text())
@@ -55,7 +55,7 @@ function Login(props) {
                   id: localStorage.getItem('id'),
                   profilePic: localStorage.getItem('photoURL'),
                 }
-                await fetch("http://localhost:5500/newUser", {
+                await fetch(`http://${import.meta.env.VITE_HOST}:5500/newUser`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

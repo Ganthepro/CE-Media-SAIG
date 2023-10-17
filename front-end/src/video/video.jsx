@@ -8,7 +8,7 @@ export function Video() {
   const [data,setData] = useState([])
 
   useEffect(async () => {
-    await fetch('http://localhost:5500/getVideo',{method:"GET"})
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/getVideo`,{method:"GET"})
     .then(response => response.text())
     .then(fetchedData => {
         setData(JSON.parse(fetchedData))

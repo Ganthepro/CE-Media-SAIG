@@ -16,7 +16,7 @@ function User(props) {
                     <img src={props.data.profilePic != null && props.data.profilePic.startsWith('/') ? '/profilePic' + props.data.profilePic : props.data.profilePic} />
                     <h2>{props.data.username}</h2>
                 </div>
-            </div>   
+            </div>
         </>
     )
 }

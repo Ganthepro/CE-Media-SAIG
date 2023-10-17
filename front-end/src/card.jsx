@@ -9,11 +9,12 @@ function Card(props) {
   const [isOpenCard, setIsOpenCard] = useState(false);
   const [postData, setPostData] = useState([]);
   function clicked() {
-    setIsOpenCard(!isOpenCard);
+    if (!props.isPro)
+      setIsOpenCard(!isOpenCard);
   }
   
   async function getPostData() {
-    await fetch(`http://localhost:5500/getPostData/${props.data.id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/getPostData/${props.data.id}`, {
       method: "GET",
     })
       .then((response) => response.text())
@@ -30,7 +31,7 @@ function Card(props) {
   }, []);
 
   async function like(id) {
-    await fetch(`http://localhost:5500/addNewLike/${id}/${localStorage.getItem('username')}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/addNewLike/${id}/${localStorage.getItem('username')}`, {
       method: "GET",
     })
       .then((response) => response.text())
@@ -51,7 +52,7 @@ function Card(props) {
         username: localStorage.getItem("username"),
         profilePic: localStorage.getItem("photoURL"),
     }
-    await fetch(`http://localhost:5500/addNewComment/${id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/addNewComment/${id}`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -67,6 +68,10 @@ function Card(props) {
         console.error(error);
       });
     getPostData()
+  }
+  
+  function deletePost() {
+    props.deleteFunc(props.data.id)
   }
 
   return (
@@ -111,7 +116,7 @@ function Card(props) {
             </>
           )}
           {props.isPro && (
-            <button>
+            <button onClick={deletePost}>
               <img src={binPic} />
             </button>
           )}

@@ -59,7 +59,7 @@ export function Upload() {
     newFormData.append(mode, fileInput.files[0]);
     newFormData.append('jsonData', JSON.stringify(data));
     if (newFormData != null) {
-      await fetch(`http://localhost:5500/postImage/${Date.now().toString()}`, {
+      await fetch(`http://${import.meta.env.VITE_HOST}:5500/postImage/${Date.now().toString()}`, {
         method: "POST",
         body: newFormData,
       })
@@ -101,7 +101,7 @@ export function Upload() {
     newFormData.append('jsonData', JSON.stringify(data));
     if (newFormData != null) {
       console.log("test")
-      await fetch(`http://localhost:5500/postVideo/${Date.now().toString()}`, {
+      await fetch(`http://${import.meta.env.VITE_HOST}:5500/postVideo/${Date.now().toString()}`, {
         method: "POST",
         body: newFormData,
       })
@@ -124,50 +124,50 @@ export function Upload() {
   
   return(
       <>
-          <Header />
-          <div className='bar'>
-              <p className='page-text'>Upload</p>
-              <button onClick={() => {handleElementClick(0);setMode('image')}} ref={elementRefs[0]} key={0}>Post</button>
-              <button onClick={() => {handleElementClick(1);setMode('video')}} ref={elementRefs[1]} key={1}>Video</button>
-          </div>
-          <div className='main-upload'>
-            <div className="input-box">
-                <div id="in-image" ref={box} >
-                    <div id="err-box" ref={boxErr} >
-                        <img src={uploadFilePic} id="err-box-im" />
-                        <p id="err-box-p">{`Upload ${mode == 'image' ? 'Image' : 'Video'}`}</p>
-                    </div>
-                    <div className="option" id="in-option">
-                        {mode == 'image' &&
-                          <>
-                            <input id="picture-input" type="file" name="picture" ref={inputFile} onChange={uploadPost} accept='image/*' />
-                            <label for="picture-input" id="video-input-profile-label">Upload Image</label>
-                          </>
-                        }
-                        {mode != 'image' &&
-                          <>
-                            <input id="video-input" type="file" name="video" ref={inputFileVideo} onChange={postedVideo} accept='video/*' />
-                            <label for="video-input" id="video-input-profile-label" style={{textAlign:"center"}}>Upload and Post Video</label>
-                          </>
-                        }
-                    </div>
-                </div>
-            </div>
-            <div className='input-box-2'>
-              <div>
-                <label for="title-input">Title :</label>
-                <input type="text" id="title-input" className='input-text' ref={inputFileTitle} />
+        <Header />
+        <div className='bar'>
+            <p className='page-text'>Upload</p>
+            <button onClick={() => {handleElementClick(0);setMode('image')}} ref={elementRefs[0]} key={0}>Post</button>
+            <button onClick={() => {handleElementClick(1);setMode('video')}} ref={elementRefs[1]} key={1}>Video</button>
+        </div>
+        <div className='main-upload'>
+          <div className="input-box">
+              <div id="in-image" ref={box} >
+                  <div id="err-box" ref={boxErr} >
+                      <img src={uploadFilePic} id="err-box-im" />
+                      <p id="err-box-p">{`Upload ${mode == 'image' ? 'Image' : 'Video'}`}</p>
+                  </div>
+                  <div className="option" id="in-option">
+                      {mode == 'image' &&
+                        <>
+                          <input id="picture-input" type="file" name="picture" ref={inputFile} onChange={uploadPost} accept='image/*' />
+                          <label for="picture-input" id="video-input-profile-label">Upload Image</label>
+                        </>
+                      }
+                      {mode != 'image' &&
+                        <>
+                          <input id="video-input" type="file" name="video" ref={inputFileVideo} onChange={postedVideo} accept='video/*' />
+                          <label for="video-input" id="video-input-profile-label" style={{textAlign:"center"}}>Upload and Post Video</label>
+                        </>
+                      }
+                  </div>
               </div>
+          </div>
+          <div className='input-box-2'>
             <div>
-                <label for="descirption-input" >Descirption : {`${descirptionLen}/80`}</label>
-                <input type="text" id="descirption-input" className='input-text' onChange={updateChange} style={{height:'100px'}} ref={inputFileDescription} />
-              </div>
-              {mode == "image" &&
-                <button className='input-post' onClick={posted}>Post</button>
-                }
+              <label for="title-input">Title :</label>
+              <input type="text" id="title-input" className='input-text' ref={inputFileTitle} />
             </div>
+          <div>
+              <label for="descirption-input" >Descirption : {`${descirptionLen}/80`}</label>
+              <input type="text" id="descirption-input" className='input-text' onChange={updateChange} style={{height:'100px'}} ref={inputFileDescription} />
+            </div>
+            {mode == "image" &&
+              <button className='input-post' onClick={posted}>Post</button>
+            }
           </div>
-          <Footer />
+        </div>
+        <Footer />
       </>
   )
 }

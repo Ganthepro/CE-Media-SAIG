@@ -8,7 +8,7 @@ export function Post() {
   const [data,setData] = useState([])
   
   useEffect(async () => {
-    await fetch('http://localhost:5500/getPost',{method:"GET"})
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/getPost`,{method:"GET"})
     .then(response => response.text())
     .then(fetchedData => {
         setData(JSON.parse(fetchedData))
@@ -30,7 +30,7 @@ export function Post() {
         <div className='contents'>
           {data.length > 0 &&
             data.map((item) => {
-                return <Card mode="pic" data={item} />
+              return <Card mode="pic" data={item} />
             })
           }
         </div>

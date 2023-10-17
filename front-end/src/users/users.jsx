@@ -7,7 +7,7 @@ import { useEffect, useState } from 'preact/hooks'
 export function Users() {
     const [data,setData] = useState([])
     useEffect(async () => {
-        await fetch('http://localhost:5500/getUsers',{method:"GET"})
+        await fetch(`http://${import.meta.env.VITE_HOST}:5500/getUsers`,{method:"GET"})
         .then(response => response.text())
         .then(fetchedData => {
             setData(JSON.parse(fetchedData))

@@ -17,7 +17,7 @@ function ShowProfile(props) {
   
   async function getItem() {
     console.log(localStorage.getItem('id'))
-    await fetch(`http://localhost:5500/getPublic/${props.id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/getPublic/${props.id}`, {
       method: "GET",
     })
       .then(response => response.text())
@@ -47,7 +47,7 @@ function ShowProfile(props) {
       country : countryRef.current.value,
       id : localStorage.getItem('id')
     }
-    await fetch('http://localhost:5500/update',{
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/update`,{
       method: 'PUT',
       body: JSON.stringify(data) ,
       headers: {
@@ -71,7 +71,7 @@ function ShowProfile(props) {
       return;
     }
     formData.append('image', fileInput.files[0]);
-    await fetch(`http://localhost:5500/uploadProfilePic/${localStorage.getItem('id')}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/uploadProfilePic/${localStorage.getItem('id')}`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -169,7 +169,7 @@ function ShowProfile(props) {
         )}
         {!props.isEdit && (
           <a
-            href={`/profile?id=${localStorage.getItem("username")}`}
+            href={`/profile?id=${isLoading ? "Loading" : data.username}`}
             style={{ color: "black", textDecoration: "none" }}
           >
             <b style={{ cursor: "pointer" }} className="edit">

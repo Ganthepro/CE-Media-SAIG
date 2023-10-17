@@ -42,7 +42,7 @@ function Header() {
   const [isOpenPro,setIsOpenPro] = useState(false)
   const [isNew,setIsNew] = useState(false)
   async function getItem() {
-    await fetch(`http://localhost:5500/getPublic/${localStorage.getItem('id')}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:5500/getPublic/${localStorage.getItem('id')}`, {
       method: "GET",
     })
       .then(response => response.text())
@@ -73,7 +73,7 @@ function Header() {
         id: localStorage.getItem('id'),
         profilePic: localStorage.getItem('photoURL'),
       }
-      await fetch("http://localhost:5500/newUser", {
+      await fetch(`http://${import.meta.env.VITE_HOST}:5500/newUser`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ function Header() {
             localStorage.setItem('username', user.displayName);
             // ใส่ Timestamp
             setUsername(localStorage.getItem('username'))
-            fetch(`http://localhost:5500/loginGoogle/${localStorage.getItem('username')}`, {
+            fetch(`http://${import.meta.env.VITE_HOST}:5500/loginGoogle/${localStorage.getItem('username')}`, {
               method: "GET",
             })
             .then(response => response.text())

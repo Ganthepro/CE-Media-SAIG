@@ -51,6 +51,7 @@ const postSchema = new Schema({
 
 const postLikeAndCommentSchema = new Schema({
   id: String,
+  username: String,
   likeNum: Number,
   whoLike: Array,
   commentNum: Number,
@@ -159,6 +160,38 @@ app.post("/newUser", (req, res) => {
     });
 });
 
+app.get("/getUserPost/:username", (req, res) => {
+  Post.find({ username: req.params.username })
+    .then((user) => {
+      if (!user) {
+        console.log("User not found");
+        return res.send("User not found");
+      }
+      console.log("User found:", user);
+      return res.json(user); // Send the user data as JSON
+    })
+    .catch((err) => {
+      console.error("Error querying user:", err);
+      return res.send("Internal Server Error"); // Handle the error
+    });
+})
+
+app.get("/getUserVideo/:username", (req, res) => {
+  Video.find({ username: req.params.username })
+    .then((user) => {
+      if (!user) {
+        console.log("User not found");
+        return res.send("User not found");
+      }
+      console.log("User found:", user);
+      return res.json(user); // Send the user data as JSON
+    })
+    .catch((err) => {
+      console.error("Error querying user:", err);
+      return res.send("Internal Server Error"); // Handle the error
+    });
+})
+
 app.put("/update", (req, res) => {
   const data = req.body;
   UserPublic.updateOne(
@@ -241,7 +274,7 @@ app.post(
         console.error("Error saving video:", err);
         return res.status(500).json({ error: "Error saving video" });
       });
-    AddLikeAndComment(req.params.id);
+    AddLikeAndComment(req.params.id,data.username);
   }
 );
 
@@ -266,7 +299,7 @@ app.post("/postImage/:id", uploadPostPic.single("image"), async (req, res) => {
       console.error("Error saving post:", err);
       return res.status(500).json({ error: "Error saving post" });
     });
-  AddLikeAndComment(req.params.id);
+  AddLikeAndComment(req.params.id,data.username);
 });
 
 async function checkImage(id) {
@@ -384,13 +417,14 @@ app.get("/likeNcomment/:id", (req, res) => {
     });
 });
 
-function AddLikeAndComment(id) {
+function AddLikeAndComment(id,username) {
   const newLikeAndComment = new PostLikeAndComment({
     id: id,
     likeNum: 0,
     whoLike: [],
     commentNum: 0,
     comments: {},
+    username: username,
   });
   newLikeAndComment
     .save()
@@ -404,10 +438,10 @@ function AddLikeAndComment(id) {
     });
 }
 
-app.post("/addNewComment/:id", (req, res) => {
+app.post("/addNewComment/:id", async (req, res) => {
   const data = req.body;
   console.log(data);
-  PostLikeAndComment.findOneAndUpdate(
+  await PostLikeAndComment.findOneAndUpdate(
     { id: req.params.id },
     {
       $push: {
@@ -429,6 +463,24 @@ app.post("/addNewComment/:id", (req, res) => {
       console.error("Error updating documents:", err);
       res.status(500).json({ error: "Error updating documents" });
     });
+});
+
+async function deletePostAndLike(id) {
+  await PostLikeAndComment.findOneAndDelete({id: id });
+}
+
+app.delete("/deletePost", async (req, res) => {
+  const data = req.body
+  await Post.findOneAndDelete({id: data.id })
+  await deletePostAndLike(data.id)
+  res.send("Deleted!")
+});
+
+app.delete("/deleteVideo", async (req, res) => {
+  const data = req.body
+  await Video.findOneAndDelete({id: data.id })
+  await deletePostAndLike(data.id)
+  res.send("Deleted!")
 });
 
 app.get("/addNewLike/:id/:username", async (req, res) => {
@@ -464,5 +516,6 @@ app.get("/addNewLike/:id/:username", async (req, res) => {
       });
   }
 });
+const host = '192.168.1.106';
 
-app.listen(5500, () => console.log("Server started on port 5500"));
+app.listen(5500, host, () => console.log("Server started on port 5500"));
