@@ -371,11 +371,7 @@ function AddLikeAndComment(id) {
     id: id,
     likeNum: 0,
     commentNum: 0,
-    comments: {
-        comment: null,
-        username: null,
-        profilePic: null,
-      }
+    comments: {}
   });
   newLikeAndComment
     .save()

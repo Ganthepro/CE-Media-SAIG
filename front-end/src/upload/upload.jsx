@@ -8,6 +8,7 @@ export function Upload() {
     const elementRefs = Array.from({ length: 2 }, () => useRef(null));
     const [mode, setMode] = useState('image')
     const [fileInput,setFileInput] = useState(null)
+    const [descirptionLen, setLen] = useState(0)
     const handleElementClick = (clickedIndex) => {
     elementRefs.forEach((ref, index) => {
       if (index === clickedIndex) {
@@ -20,7 +21,7 @@ export function Upload() {
       }
     });
   };
-  useEffect(() => {handleElementClick(0)},[])
+  useEffect(() => {handleElementClick(0);setFileInput(inputFile.current);},[])
   
   const inputFile = useRef(null)
   const inputFileVideo = useRef(null)
@@ -28,10 +29,8 @@ export function Upload() {
   const inputFileDescription = useRef(null)
   const box = useRef(null)
   const boxErr = useRef(null)
-  const [isUpload,setIsUpload] = useState(false)
   
-  function uploadPost() {
-    setFileInput(inputFile.current);
+  async function uploadPost() {
     if (!fileInput || !fileInput.files || !fileInput.files[0]) {
       alert("No file selected");
       return;
@@ -41,6 +40,14 @@ export function Upload() {
   }
   
   async function posted() {
+    if (inputFileTitle.current.value == "" || inputFileDescription.current.value == "") {
+      alert("You have not entered complete information.")
+      return
+    }
+    if (inputFileDescription.current.value.length > 80) {
+      alert("Maximum word is 80.")
+      return
+    }
     const newFormData = new FormData()
     const data = {
       title: inputFileTitle.current.value,
@@ -69,6 +76,14 @@ export function Upload() {
   }
   
   async function postedVideo() {
+    if (inputFileTitle.current.value == "" || inputFileDescription.current.value == "") {
+      alert("You have not entered complete information.")
+      return
+    }
+    if (inputFileDescription.current.value.length > 80) {
+      alert("Maximum word is 80.")
+      return
+    }
     const file = await inputFileVideo.current
     if (!file || !file.files || !file.files[0]) {
       alert("No video selected");
@@ -100,13 +115,16 @@ export function Upload() {
         });
     }
   }
+  function updateChange() {
+    setLen(inputFileDescription?.current?.value.length)
+  }
   
   return(
       <>
           <Header />
           <div className='bar'>
               <p className='page-text'>Upload</p>
-              <button onClick={() => {handleElementClick(0);setMode('image')}}  ref={elementRefs[0]} key={0}>Post</button> 
+              <button onClick={() => {handleElementClick(0);setMode('image')}} ref={elementRefs[0]} key={0}>Post</button> 
               <button onClick={() => {handleElementClick(1);setMode('video')}} ref={elementRefs[1]} key={1}>Video</button> 
           </div>
           <div className='main-upload'>
@@ -114,7 +132,7 @@ export function Upload() {
                 <div id="in-image" ref={box} >
                     <div id="err-box" ref={boxErr} >
                         <img src={uploadFilePic} id="err-box-im" />
-                        <p id="err-box-p">{!isUpload ? `Upload ${mode == 'image' ? 'Image' : 'Video'}` : "Uploaded"}</p>
+                        <p id="err-box-p">{`Upload ${mode == 'image' ? 'Image' : 'Video'}`}</p>
                     </div>
                     <div className="option" id="in-option">
                         {mode == 'image' &&
@@ -126,7 +144,7 @@ export function Upload() {
                         {mode != 'image' &&
                           <>
                             <input id="video-input" type="file" name="video" ref={inputFileVideo} onChange={postedVideo} accept='video/*' />
-                            <label for="video-input" id="video-input-profile-label">Upload and Post Video</label>
+                            <label for="video-input" id="video-input-profile-label" style={{textAlign:"center"}}>Upload and Post Video</label>
                           </>
                         }
                     </div>
@@ -138,8 +156,8 @@ export function Upload() {
                 <input type="text" id="title-input" className='input-text' ref={inputFileTitle} />
               </div>
               <div>
-                <label for="descirption-input">Descirption :</label>
-                <input type="text" id="descirption-input" className='input-text' style={{height:'100px'}} ref={inputFileDescription} />
+                <label for="descirption-input" >Descirption : {`${descirptionLen}/80`}</label>
+                <input type="text" id="descirption-input" className='input-text' onChange={updateChange} style={{height:'100px'}} ref={inputFileDescription} />
               </div>
               {mode == "image" &&
                 <button className='input-post' onClick={posted} >Post</button>

@@ -12,11 +12,17 @@ function BigCard(props) {
   }
 
   function like() {
-    props.like(props.data.id)
+    if (localStorage.getItem('username') != undefined || localStorage.getItem('username') != null)
+      props.like(props.data.id)
+    else
+      alert("Please Log In.")
   }
   
   function addComment() {
-    props.comment(props.data.id,commentInput.current.value)
+    if (localStorage.getItem('username') != undefined || localStorage.getItem('username') != null)
+      props.comment(props.data.id,commentInput.current.value)
+    else
+      alert("Please Log In.")
   }
   
   return (
@@ -70,8 +76,9 @@ function BigCard(props) {
             </div>
             {console.log(props.postData.comments)}
             {props.postData.comments.length > 0 &&
-              props.postData.comments.map((item) => {
-                  return <Comment data={item} />
+              props.postData.comments.map((item, index) => {
+                  if (index > 0)
+                    return <Comment data={item} />
               })
             }
           </div>

@@ -18,6 +18,11 @@ img {
     margin-left: 7px;
 }
 
+.user-comment-img {
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+}
+
 h4 {
     white-space: nowrap;
     overflow: hidden;
