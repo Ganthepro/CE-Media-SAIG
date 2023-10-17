@@ -1,14 +1,13 @@
 import './comment.css'
-import userPic from "./assets/user.png";
 
-function Comment() {
+function Comment(props) {
     return(
         <div className='main-comment'>
             <div className='user-comment'>
-                <img src={userPic}></img>
-                <h4>Gan Thepro</h4>
+                <img src={`/profilePic${props.data.profilePic}`}></img>
+                <h4>{props.data.username}</h4>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem fugit labore ipsum itaque. Dignissimos nam, provident officia nostrum architecto totam harum quaerat magnam minima velit, doloremque ducimus ad quas dolores.</p>
+            <p>{props.data.comment}</p>
         </div>
     )
 }

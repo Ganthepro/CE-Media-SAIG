@@ -1,9 +1,10 @@
 .main-of-main {
     overflow: auto;
     position: fixed;
-    left: 50%;top: 50%;transform: translate(-50%,-50%);
     z-index: 3;
+    top: 0;
     height: 95%;
+    top: 50%;transform: translate(0,-50%);
 }
 
 .card {
@@ -19,6 +20,8 @@
 .main-big-card {
     position: relative;   
     left: 0;
+    top: 10px;
+    top: 50%;transform: translate(0,-50%);
 }
 
 .card * {
@@ -93,6 +96,7 @@
     justify-content: space-around;
     padding: 5px;
     margin-bottom: 5px;
+    display: flex;
 }
 
 #name {
@@ -135,6 +139,7 @@ hr {
     .card,.comment {
         width: 95%;
         left: 50%;transform: translate(-50%,0);
+        top: 10px;
     }
     .pic-big-card img,.pic-big-card video  {
         margin-left: 0;

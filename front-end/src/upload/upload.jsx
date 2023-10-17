@@ -78,7 +78,7 @@ export function Upload() {
     const data = {
       title: inputFileTitle.current.value,
       description: inputFileDescription.current.value,
-      username: localStorage.getItem('username'), 
+      username: localStorage.getItem('username'),
     }
     newFormData.append(mode, file.files[0]);
     newFormData.append('jsonData', JSON.stringify(data));

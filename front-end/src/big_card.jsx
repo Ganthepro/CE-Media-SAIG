@@ -1,16 +1,24 @@
 import "./big_card.css";
-import testVideo from "./assets/VID_20231005_211503.mp4";
 import likePic from "./assets/like.png";
 import commentPic from "./assets/chat.png";
 import closePic from "./assets/close.png";
 import Comment from "./comment";
+import { useEffect, useRef } from "preact/hooks";
 
 function BigCard(props) {
+  const commentInput = useRef(null)
   function closeCard() {
-    console.log("close")
     props.close();
   }
 
+  function like() {
+    props.like(props.data.id)
+  }
+  
+  function addComment() {
+    props.comment(props.data.id,commentInput.current.value)
+  }
+  
   return (
     <>
       <div className="main-of-main">
@@ -45,24 +53,27 @@ function BigCard(props) {
               )}
             </div>
             <div className="expression">
-              <button>
+              <button onClick={like}>
                 <img src={likePic} />
-                <p>12,514</p>
+                <p>{props.postData.likeNum}</p>
               </button>
               <button>
                 <img src={commentPic} />
-                <p>5267</p>
+                <p>{props.postData.commentNum}</p>
               </button>
             </div>
           </div>
           <div className="comment">
-            <form action="submit_action.php" method="POST" className="comment-form">
-              <input type="text" id="name" name="name" placeholder="Comment" />
-              <input type="submit" value="Submit" />
-            </form>
-            <Comment />
-            <Comment />
-            <Comment />
+            <div className="comment-form">
+              <input type="text" id="name" name="name" placeholder="Comment" ref={commentInput} />
+              <button onClick={addComment}>Submit</button>
+            </div>
+            {console.log(props.postData.comments)}
+            {props.postData.comments.length > 0 &&
+              props.postData.comments.map((item) => {
+                  return <Comment data={item} />
+              })
+            }
           </div>
         </div>
       </div>

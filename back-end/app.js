@@ -48,10 +48,18 @@ const postSchema = new Schema({
   src: String,
 })
 
+const postLikeAndCommentSchema = new Schema({
+  id: String,
+  likeNum: Number,
+  commentNum: Number, 
+  comments: Array,
+})
+
 const User = mongoose.model("User", userSchema, "users");
 const UserPublic = mongoose.model("UserPublic", publicSchema, "publicData");
 const Post = mongoose.model("Post", postSchema, "posts");
 const Video = mongoose.model("Video", postSchema, "videos");
+const PostLikeAndComment = mongoose.model("PostLikeAndComment", postLikeAndCommentSchema, "postLikeAndComment")
 
 app.get("/loginGoogle/:input", (req, res) => {
   UserPublic.findOne({ username: req.params.input }) // Use findOne instead of find
@@ -221,6 +229,7 @@ app.post("/postVideo/:id",uploadPostVideo.single('video'), async(req, res) => {
       console.error("Error saving video:", err);
       return res.status(500).json({ error: "Error saving video" });
     });
+  AddLikeAndComment(req.params.id)
 })
 
 app.post("/postImage/:id",uploadPostPic.single("image"), async (req, res) => {
@@ -243,6 +252,7 @@ app.post("/postImage/:id",uploadPostPic.single("image"), async (req, res) => {
       console.error("Error saving post:", err);
       return res.status(500).json({ error: "Error saving post" });
     });
+  AddLikeAndComment(req.params.id)
 })
 
 async function checkImage(id) {
@@ -302,6 +312,22 @@ app.post("/uploadProfilePic/:id", uploadProfile.single("image"), async (req, res
     deleteOldProfilePic(oldIm)
 });
 
+app.get('/getPostData/:id', (req, res) => {
+  PostLikeAndComment.findOne({ id: req.params.id })
+  .then((user) => {
+    if (!user) {
+      console.log("post not found");
+      return res.send("post not found");
+    }
+    console.log("post found:", user);
+    return res.json(user)
+  })
+  .catch((err) => {
+    console.error("Error querying post:", err);
+    return res.send("Internal Server Error"); // Handle the error
+  });
+})
+
 app.get('/getPost', async (req, res) => {
   try {
     const posts = await Post.find({}).exec();
@@ -322,6 +348,84 @@ app.get('/getVideo', async (req, res) => {
     console.error('Error querying for videos:', err);
     return res.status(500).json({ error: 'Error querying for videos' });
   }
+})
+
+app.get("/likeNcomment/:id", (req, res) => {
+  PostLikeAndComment.findOne({ id: req.params.id })
+  .then((user) => {
+    if (!user) {
+      console.log("post not found");
+      return res.send("post not found");
+    }
+    console.log("post found:", user);
+    return res.json(user)
+  })
+  .catch((err) => {
+    console.error("Error querying post:", err);
+    return res.send("Internal Server Error"); // Handle the error
+  });
+})
+
+function AddLikeAndComment(id) {
+  const newLikeAndComment = new PostLikeAndComment({
+    id: id,
+    likeNum: 0,
+    commentNum: 0,
+    comments: {
+        comment: null,
+        username: null,
+        profilePic: null,
+      }
+  });
+  newLikeAndComment
+    .save()
+    .then((result) => {
+      console.log("New postLikeAndComment saved:", result);
+      return
+    })
+    .catch((err) => {
+      console.error("Error saving postLikeAndComment:", err);
+      return 
+    });
+}
+
+app.post('/addNewComment/:id', (req, res) => {
+  const data = req.body
+  console.log(data)
+  PostLikeAndComment.findOneAndUpdate(
+    { id: req.params.id },
+    {
+      $push: { comments: { comment: data.comment, username: data.username, profilePic: data.profilePic } },
+      $inc: { commentNum: 1 }
+    },
+    { new: true },
+  )
+    .then((result) => {
+      console.log("Documents updated:", result);
+      res.send("Update successful");
+    })
+    .catch((err) => {
+      console.error("Error updating documents:", err);
+      res.status(500).json({ error: "Error updating documents" });
+    });
+});
+
+app.get('/addNewLike/:id', (req, res) => {
+  PostLikeAndComment.findOneAndUpdate(
+    { id: req.params.id },
+    {
+      $inc: { likeNum: 1 }
+    },
+    { new: true }, 
+  )
+    .then((result) => {
+      console.log("Documents updated:", result);
+      res.send("Update successful");
+    })
+    .catch((err) => {
+      console.error("Error updating documents:", err);
+      res.status(500).json({ error: "Error updating documents" });
+    });
 })
 
 app.listen(5500, () => console.log("Server started on port 5500"));
