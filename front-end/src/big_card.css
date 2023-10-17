@@ -40,7 +40,23 @@
 .userName {
     top: 45px;
     position: absolute;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    left: 0;
 }
+
+.userName img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.userName *{
+    margin: 0;
+    margin-left: 10px;
+}
+
 
 .description {
     top: 70px;

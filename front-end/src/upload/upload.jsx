@@ -52,7 +52,8 @@ export function Upload() {
     const data = {
       title: inputFileTitle.current.value,
       description: inputFileDescription.current.value,
-      username: localStorage.getItem('username'), 
+      username: localStorage.getItem('username'),
+      profilePic: localStorage.getItem('photoURL'),
     }
     console.log(fileInput.files[0])
     newFormData.append(mode, fileInput.files[0]);
@@ -94,6 +95,7 @@ export function Upload() {
       title: inputFileTitle.current.value,
       description: inputFileDescription.current.value,
       username: localStorage.getItem('username'),
+      profilePic: localStorage.getItem('photoURL'),
     }
     newFormData.append(mode, file.files[0]);
     newFormData.append('jsonData', JSON.stringify(data));
@@ -115,6 +117,7 @@ export function Upload() {
         });
     }
   }
+  
   function updateChange() {
     setLen(inputFileDescription?.current?.value.length)
   }
@@ -124,8 +127,8 @@ export function Upload() {
           <Header />
           <div className='bar'>
               <p className='page-text'>Upload</p>
-              <button onClick={() => {handleElementClick(0);setMode('image')}} ref={elementRefs[0]} key={0}>Post</button> 
-              <button onClick={() => {handleElementClick(1);setMode('video')}} ref={elementRefs[1]} key={1}>Video</button> 
+              <button onClick={() => {handleElementClick(0);setMode('image')}} ref={elementRefs[0]} key={0}>Post</button>
+              <button onClick={() => {handleElementClick(1);setMode('video')}} ref={elementRefs[1]} key={1}>Video</button>
           </div>
           <div className='main-upload'>
             <div className="input-box">
@@ -155,13 +158,13 @@ export function Upload() {
                 <label for="title-input">Title :</label>
                 <input type="text" id="title-input" className='input-text' ref={inputFileTitle} />
               </div>
-              <div>
+            <div>
                 <label for="descirption-input" >Descirption : {`${descirptionLen}/80`}</label>
                 <input type="text" id="descirption-input" className='input-text' onChange={updateChange} style={{height:'100px'}} ref={inputFileDescription} />
               </div>
               {mode == "image" &&
-                <button className='input-post' onClick={posted} >Post</button>
-              }
+                <button className='input-post' onClick={posted}>Post</button>
+                }
             </div>
           </div>
           <Footer />

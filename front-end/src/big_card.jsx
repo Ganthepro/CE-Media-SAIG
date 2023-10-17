@@ -48,7 +48,10 @@ function BigCard(props) {
               />
             </button>
             <h2 className="title-big-card">{props.data.title}</h2>
-            <b className="userName">{props.data.username}</b>
+            <div  className="userName">
+              <img src={`/profilePic${props.data.profilePic}`} alt="user" />
+              <b>{props.data.username}</b>
+            </div>
             <p className="description">{props.data.description}</p>
             <div className="pic-big-card">
               {props.mode == "pic" && <img src={`/postFolder${props.data.src}`} />}

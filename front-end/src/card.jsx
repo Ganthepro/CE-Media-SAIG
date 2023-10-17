@@ -30,7 +30,7 @@ function Card(props) {
   }, []);
 
   async function like(id) {
-    await fetch(`http://localhost:5500/addNewLike/${id}`, {
+    await fetch(`http://localhost:5500/addNewLike/${id}/${localStorage.getItem('username')}`, {
       method: "GET",
     })
       .then((response) => response.text())
@@ -77,7 +77,10 @@ function Card(props) {
         style={!props.isPro && { cursor: "pointer" }}
       >
         <h2 className="title-card">{props.data.title}</h2>
-        <b className="userName">{props.data.username}</b>
+        <div  className="userName">
+          <img src={`/profilePic${props.data.profilePic}`} alt="user" />
+          <b>{props.data.username}</b>
+        </div>
         <p className="description">{props.data.description}</p>
         <div className="pic-card">
           {props.mode == "pic" && <img src={`/postFolder${props.data.src}`} />}
