@@ -66,7 +66,10 @@ export function Profile() {
                 <button onClick={() => {handleElementClick(0);setMode('post')}}  ref={elementRefs[0]} key={0}>All Post</button> 
                 <button onClick={() => {handleElementClick(1);setMode('video')}} ref={elementRefs[1]} key={1}>All Video</button> 
             </div>
-            <div className='contents'>
+              <div className='contents' style={data.length <= 3 ? {height: "calc(100vh - 80px - 10px - 70px)",display: "flex", justifyContent:"space-around",alignItems:"center",} : {}}>
+                {data.length == 0 &&
+                  <h2 style={{fontSize:"50px"}}>{mode == "post" ? "No Post" : "No Video"}</h2>
+                }
                 {mode == 'post' && data.length > 0 &&
                   data.map((item) => {
                       return <Card mode="pic" data={item} isPro={queryParameters.get('id') == localStorage.getItem('username') ? true : false} deleteFunc={deletePost} />

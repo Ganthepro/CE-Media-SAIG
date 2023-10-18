@@ -19,8 +19,11 @@ function BigCard(props) {
   }
   
   function addComment() {
-    if (localStorage.getItem('username') != undefined || localStorage.getItem('username') != null)
+    if (localStorage.getItem('username') != undefined || localStorage.getItem('username') != null) {
       props.comment(props.data.id,commentInput.current.value)
+      commentInput.current.value = ""
+      alert("Post Comment Successfully")
+    }
     else
       alert("Please Log In.")
   }
@@ -77,7 +80,6 @@ function BigCard(props) {
               <input type="text" id="name" name="name" placeholder="Comment" ref={commentInput} />
               <button onClick={addComment}>Submit</button>
             </div>
-            {console.log(props.postData.comments)}
             {props.postData.comments.length > 0 &&
               props.postData.comments.map((item, index) => {
                   if (index > 0)

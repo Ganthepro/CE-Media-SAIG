@@ -23,7 +23,10 @@ export function Users() {
             <div className='bar'>
                 <p className='page-text'>Users</p>
             </div>
-            <div className='contents-users'>
+                <div className='contents-users' style={data.length < 0 ? {height: "calc(100vh - 80px - 10px - 66px)"} : {}}>
+                {data.length == 0 &&
+                    <h2 style={{display: "flex", justifyContent:"center",alignItems:"center",fontSize:"50px"}}>No Users</h2>
+                }
                 {data.length > 0 &&
                     data.map((item, index) => {
                         if (index % 2 == 0) 

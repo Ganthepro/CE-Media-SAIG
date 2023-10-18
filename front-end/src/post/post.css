@@ -11,6 +11,13 @@
   position: static;
 }
 
+.contents {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  position: static;
+}
+
 .big-card {
   position: fixed;
   top: 10px;

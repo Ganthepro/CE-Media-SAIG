@@ -9,6 +9,7 @@ export function Upload() {
     const [mode, setMode] = useState('image')
     const [fileInput,setFileInput] = useState(null)
     const [descirptionLen, setLen] = useState(0)
+    const [titleLen, setTitleLen] = useState(0)
     const handleElementClick = (clickedIndex) => {
     elementRefs.forEach((ref, index) => {
       if (index === clickedIndex) {
@@ -48,6 +49,10 @@ export function Upload() {
       alert("Maximum word is 80.")
       return
     }
+    if (inputFileTitle.current.value.length > 18) {
+      alert("Maximum word is 18.")
+      return
+    }
     const newFormData = new FormData()
     const data = {
       title: inputFileTitle.current.value,
@@ -55,7 +60,6 @@ export function Upload() {
       username: localStorage.getItem('username'),
       profilePic: localStorage.getItem('photoURL'),
     }
-    console.log(fileInput.files[0])
     newFormData.append(mode, fileInput.files[0]);
     newFormData.append('jsonData', JSON.stringify(data));
     if (newFormData != null) {
@@ -74,6 +78,7 @@ export function Upload() {
           console.error(error);
         });
     }
+    window.location.reload()
   }
   
   async function postedVideo() {
@@ -83,6 +88,10 @@ export function Upload() {
     }
     if (inputFileDescription.current.value.length > 80) {
       alert("Maximum word is 80.")
+      return
+    }
+    if (inputFileTitle.current.value.length > 18) {
+      alert("Maximum word is 18.")
       return
     }
     const file = await inputFileVideo.current
@@ -116,10 +125,12 @@ export function Upload() {
           console.error(error);
         });
     }
+    window.location.reload()
   }
   
   function updateChange() {
     setLen(inputFileDescription?.current?.value.length)
+    setTitleLen(inputFileTitle?.current?.value.length)
   }
   
   return(
@@ -155,8 +166,8 @@ export function Upload() {
           </div>
           <div className='input-box-2'>
             <div>
-              <label for="title-input">Title :</label>
-              <input type="text" id="title-input" className='input-text' ref={inputFileTitle} />
+              <label for="title-input">Title : {`${titleLen}/18`}</label>
+              <input type="text" id="title-input" className='input-text' ref={inputFileTitle} onChange={updateChange}  />
             </div>
           <div>
               <label for="descirption-input" >Descirption : {`${descirptionLen}/80`}</label>
