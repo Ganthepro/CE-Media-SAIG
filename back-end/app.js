@@ -491,7 +491,6 @@ app.get("/addNewLike/:id/:username", async (req, res) => {
         console.log("post not found");
       }
       console.log("post found:", user);
-      // console.log(user.whoLike.includes(req.params.username))
       if (user.whoLike.includes(req.params.username)) flag = true;
     })
     .catch((err) => {
@@ -516,6 +515,5 @@ app.get("/addNewLike/:id/:username", async (req, res) => {
       });
   }
 });
-const host = '192.168.1.106';
 
-app.listen(5500, host, () => console.log("Server started on port 5500"));
+app.listen(5500, () => console.log("Server started on port 5500"));

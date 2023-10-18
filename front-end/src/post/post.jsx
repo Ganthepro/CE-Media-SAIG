@@ -24,8 +24,6 @@ export function Post() {
         <Header />
         <div className='bar'>
             <p className='page-text'>Post</p>
-            <button>recomment 1</button> 
-            <button>recomment 2</button> 
         </div>
         <div className='contents'>
           {data.length > 0 &&

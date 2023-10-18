@@ -24,8 +24,6 @@ export function Video() {
         <Header />
         <div className='bar'>
             <p className='page-text'>Video</p>
-            <button>recomment 1</button> 
-            <button>recomment 2</button> 
         </div>
         <div className="contents">
           {data.length > 0 &&
