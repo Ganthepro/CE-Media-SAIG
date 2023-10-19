@@ -465,10 +465,6 @@ app.post("/addNewComment/:id", async (req, res) => {
     });
 });
 
-async function deletePostAndLike(id) {
-  await PostLikeAndComment.findOneAndDelete({id: id });
-}
-
 function deletePostFile(id) {
   Post.findOne({ id: id })
     .then((user) => {
@@ -511,7 +507,7 @@ app.delete("/deletePost", async (req, res) => {
   const data = req.body
   await deletePostFile(data.id)
   await Post.findOneAndDelete({id: data.id })
-  await deletePostAndLike(data.id)
+  await PostLikeAndComment.findOneAndDelete({id: data.id });
   res.send("Deleted!")
 });
 
@@ -519,7 +515,7 @@ app.delete("/deleteVideo", async (req, res) => {
   const data = req.body
   await deleteVideoFile(data.id)
   await Video.findOneAndDelete({id: data.id })
-  await deletePostAndLike(data.id)
+  await PostLikeAndComment.findOneAndDelete({id: data.id });
   res.send("Deleted!")
 });
 
