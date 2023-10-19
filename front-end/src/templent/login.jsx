@@ -15,6 +15,10 @@ function Login(props) {
     }
     
     function signIn() {
+        if (userInput.current.value.length == 0 || passInput.current.value.length == 0) {
+            alert("Username or Password is Nothing")
+            return
+        }
         fetch(`http://${import.meta.env.VITE_HOST}:5500/login/${userInput.current.value}/${passInput.current.value}`, {
           method: "GET",
         })
@@ -37,6 +41,14 @@ function Login(props) {
     function signUp() {
         const userValue = userInput.current.value
         const passValue = passInput.current.value
+        if (userInput.current.value.lenght == 0 || passInput.current.value.value == 0) {
+            alert("Username or Password is Nothing")
+            return
+        }
+        if (passInput.current.value.length < 8) {
+            alert("Password length must more than 8")
+            return
+        }
         fetch(`http://${import.meta.env.VITE_HOST}:5500/getPublic/${userValue}`, {
           method: "GET"
         })
