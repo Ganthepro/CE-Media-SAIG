@@ -469,8 +469,47 @@ async function deletePostAndLike(id) {
   await PostLikeAndComment.findOneAndDelete({id: id });
 }
 
+function deletePostFile(id) {
+  Post.findOne({ id: id })
+    .then((user) => {
+      if (!user) {
+        console.log("image not found");
+        const filePath = `../front-end/public/postFolder${user.src}`;
+        fs.unlink(filePath, (err) => {
+          if (err) console.error("Error deleting file:", err);
+          console.log("File deleted successfully : " + user.src);
+        });
+        return;
+      }
+      console.log("image found");
+    })
+    .catch((err) => {
+      console.error("Error querying image:", err);
+    });
+}
+
+function deleteVideoFile(id) {
+  Video.findOne({ id: id })
+    .then((user) => {
+      if (!user) {
+        console.log("video not found");
+        const filePath = `../front-end/public/videoFolder${user.src}`;
+        fs.unlink(filePath, (err) => {
+          if (err) console.error("Error deleting file:", err);
+          console.log("File deleted successfully : " + user.src);
+        });
+        return;
+      }
+      console.log("video found");
+    })
+    .catch((err) => {
+      console.error("Error querying video:", err);
+    });
+}
+
 app.delete("/deletePost", async (req, res) => {
   const data = req.body
+  await deletePostFile(data.id)
   await Post.findOneAndDelete({id: data.id })
   await deletePostAndLike(data.id)
   res.send("Deleted!")
@@ -478,6 +517,7 @@ app.delete("/deletePost", async (req, res) => {
 
 app.delete("/deleteVideo", async (req, res) => {
   const data = req.body
+  await deleteVideoFile(data.id)
   await Video.findOneAndDelete({id: data.id })
   await deletePostAndLike(data.id)
   res.send("Deleted!")
