@@ -20,13 +20,13 @@ import {
 const provider = new GoogleAuthProvider();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBRKBdCUj4Paxa_bTCKLMtDoUJenMD-l74",
-  authDomain: "ce-media-37da0.firebaseapp.com",
-  projectId: "ce-media-37da0",
-  storageBucket: "ce-media-37da0.appspot.com",
-  messagingSenderId: "110411703444",
-  appId: "1:110411703444:web:aa5f794e900208db4c0081",
-  measurementId: "G-WS0125RYDY",
+  apiKey: import.meta.env.VITE_APIKEY,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_PRUJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
