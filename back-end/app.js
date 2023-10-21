@@ -174,7 +174,7 @@ app.get("/getUserPost/:username", (req, res) => {
       console.error("Error querying user:", err);
       return res.send("Internal Server Error"); // Handle the error
     });
-})
+});
 
 app.get("/getUserVideo/:username", (req, res) => {
   Video.find({ username: req.params.username })
@@ -190,7 +190,7 @@ app.get("/getUserVideo/:username", (req, res) => {
       console.error("Error querying user:", err);
       return res.send("Internal Server Error"); // Handle the error
     });
-})
+});
 
 app.put("/update", (req, res) => {
   const data = req.body;
@@ -274,7 +274,7 @@ app.post(
         console.error("Error saving video:", err);
         return res.status(500).json({ error: "Error saving video" });
       });
-    AddLikeAndComment(req.params.id,data.username);
+    AddLikeAndComment(req.params.id, data.username);
   }
 );
 
@@ -299,7 +299,7 @@ app.post("/postImage/:id", uploadPostPic.single("image"), async (req, res) => {
       console.error("Error saving post:", err);
       return res.status(500).json({ error: "Error saving post" });
     });
-  AddLikeAndComment(req.params.id,data.username);
+  AddLikeAndComment(req.params.id, data.username);
 });
 
 async function checkImage(id) {
@@ -417,7 +417,7 @@ app.get("/likeNcomment/:id", (req, res) => {
     });
 });
 
-function AddLikeAndComment(id,username) {
+function AddLikeAndComment(id, username) {
   const newLikeAndComment = new PostLikeAndComment({
     id: id,
     likeNum: 0,
@@ -504,19 +504,19 @@ function deleteVideoFile(id) {
 }
 
 app.delete("/deletePost", async (req, res) => {
-  const data = req.body
-  await deletePostFile(data.id)
-  await Post.findOneAndDelete({id: data.id })
-  await PostLikeAndComment.findOneAndDelete({id: data.id });
-  res.send("Deleted!")
+  const data = req.body;
+  await deletePostFile(data.id);
+  await Post.findOneAndDelete({ id: data.id });
+  await PostLikeAndComment.findOneAndDelete({ id: data.id });
+  res.send("Deleted!");
 });
 
 app.delete("/deleteVideo", async (req, res) => {
-  const data = req.body
-  await deleteVideoFile(data.id)
-  await Video.findOneAndDelete({id: data.id })
-  await PostLikeAndComment.findOneAndDelete({id: data.id });
-  res.send("Deleted!")
+  const data = req.body;
+  await deleteVideoFile(data.id);
+  await Video.findOneAndDelete({ id: data.id });
+  await PostLikeAndComment.findOneAndDelete({ id: data.id });
+  res.send("Deleted!");
 });
 
 app.get("/addNewLike/:id/:username", async (req, res) => {
