@@ -101,13 +101,11 @@ function Header() {
         }
         getRedirectResult(auth)
           .then((result) => {
-            // This gives you a Google Access Token. You can use it to access Google APIs.
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
             localStorage.setItem('username', user.displayName);
-            // ใส่ Timestamp
             setUsername(localStorage.getItem('username'))
             fetch(`http://${import.meta.env.VITE_HOST}:5500/loginGoogle/${localStorage.getItem('username')}`, {
               method: "GET",
