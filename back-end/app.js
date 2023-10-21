@@ -401,22 +401,6 @@ app.get("/getVideo", async (req, res) => {
   }
 });
 
-app.get("/likeNcomment/:id", (req, res) => {
-  PostLikeAndComment.findOne({ id: req.params.id })
-    .then((user) => {
-      if (!user) {
-        console.log("post not found");
-        return res.send("post not found");
-      }
-      console.log("post found:", user);
-      return res.json(user);
-    })
-    .catch((err) => {
-      console.error("Error querying post:", err);
-      return res.send("Internal Server Error"); // Handle the error
-    });
-});
-
 function AddLikeAndComment(id, username) {
   const newLikeAndComment = new PostLikeAndComment({
     id: id,

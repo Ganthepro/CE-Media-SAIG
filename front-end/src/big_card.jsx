@@ -3,7 +3,7 @@ import likePic from "./assets/like.png";
 import commentPic from "./assets/chat.png";
 import closePic from "./assets/close.png";
 import Comment from "./comment";
-import { useEffect, useRef } from "preact/hooks";
+import { useRef } from "preact/hooks";
 
 function BigCard(props) {
   const commentInput = useRef(null)
