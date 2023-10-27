@@ -89,7 +89,7 @@ function Login(props) {
     return(
         <>
             <div className='main-login'>
-                <h3 className='h3-login'>Sign In/Up</h3>
+                <h3 className='h3-login'>Log In</h3>
                 <a onClick={close} className="close-but" style={{position: "absolute",right:"15px",top:"10px"}}><img src={closePic} /></a>
                 <div className='sub-login'>
                     <div className='login-form'>

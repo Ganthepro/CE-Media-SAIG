@@ -196,7 +196,7 @@ function Header() {
         </div>
         <button className="user" onClick={click}>
           <img src={!isLogin ? userPic : profilePicURL != null && profilePicURL.startsWith('/') ? '/profilePic' + profilePicURL : profilePicURL} alt="User Icon" style={{borderRadius : "50%"}}/>
-          <p style={{marginTop:"0"}}>{isLogin ? "Signed In" : "Sign In/Up"}</p>
+          <p style={{marginTop:"0"}}>{isLogin ? "Signed In" : "Login"}</p>
           {isNav && <Navbar signOutFunc={handleSignOut} userName={Username} openPro={setIsOpenPro}/>}
         </button>
       </div>
