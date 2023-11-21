@@ -3,8 +3,6 @@ import { useState, useEffect } from "preact/hooks";
 import React from 'react';
 import userPic from "../assets/user.png";
 import CE_logoPic from "../assets/ce_logo.png";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import Navbar from "./navbar_mobile";
 import Login from "./login";
 import ShowProfile from "./show-profile";
@@ -16,6 +14,8 @@ import {
   getRedirectResult,
   signOut,
 } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 const provider = new GoogleAuthProvider();
 
